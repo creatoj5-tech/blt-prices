@@ -43,10 +43,16 @@ def categorize(rec):
     """Return (category, model_key) for an entry."""
     ident = rec["identifier"]
     if ident.startswith("iPhone "):
-        # Model = everything before the first storage marker (e.g. "128GB", "1TB").
-        # Handles "iPhone 14 Pro Max 128GB Unlocked", "iPhone 17E 256GB Unlocked", "iPhone SE 64GB Unlocked".
+        # Model = everything before the first storage marker.
         m = re.match(r"(iPhone\s+.+?)\s+\d+(?:GB|TB)\b", ident)
-        cat = "iphone-new" if rec["new_used"] == "NEW" else "iphone-used"
+        # SWAP HSO is conceptually "factory-fresh, never used, just no box" — it lives
+        # in iphone-new.html alongside Sealed / Open Box. iphone-used.html stays clean
+        # (Grade A through DOA only) so a default seller query can never accidentally
+        # surface an HSO line.
+        if rec["new_used"] == "NEW" or rec["condition"].upper() == "SWAP HSO":
+            cat = "iphone-new"
+        else:
+            cat = "iphone-used"
         if m:
             return cat, m.group(1).strip()
         return cat, "iPhone (other)"
@@ -78,8 +84,9 @@ def order_index(condition, ordering):
     return 99
 
 CONDITION_BLURBS = {
+    # USED grades (live in iphone-used.html)
     "Grade A": ("Grade A Prices — DEFAULT for sellers who don't specify condition (no scratches, mint, like new)",
-                "These are the DEFAULT buying prices. Quote a Grade A price whenever a seller names a phone without specifying condition. Trigger phrases that map here: \"no scratches\", \"mint\", \"like new\", silence on condition. NEVER pick a SWAP HSO price as the default — SWAP HSO is at the bottom of this page and only applies to \"brand new + no box\" descriptions."),
+                "These are the DEFAULT buying prices for used iPhones. Quote a Grade A price whenever a seller names a phone without specifying condition. Trigger phrases that map here: \"no scratches\", \"mint\", \"like new\", silence on condition. SWAP HSO prices are NOT on this page — they live in iphone-new.html and only apply to explicit \"brand new + no box\" descriptions."),
     "Grade B": ("Grade B Prices — for sellers who say \"light use, no cracks, fully functional\"",
                 "Quote a Grade B price ONLY when the seller describes light wear with no cracks and full functionality."),
     "Grade C": ("Grade C Prices — for sellers describing cracked screens, hairline cracks, or heavy scratches",
@@ -88,14 +95,24 @@ CONDITION_BLURBS = {
                 "Quote a Grade D price for: bad LCD, dead pixels, lines on screen, screen black but powers on."),
     "DOA": ("DOA Prices — for sellers describing a dead device",
             "Quote a DOA price ONLY for: won't power on, water damage, completely dead device."),
-    "SWAP HSO": ("SWAP HSO Prices — DO NOT QUOTE BY DEFAULT. ONLY for explicit \"brand new + no box\" descriptions",
-                 "WARNING: SWAP HSO is NOT the default condition. Quote a SWAP HSO price ONLY when the seller explicitly says the device is brand new AND has no box. Trigger phrases: \"brand new without the box\", \"never used, no box\", \"factory new no box\", \"0 cycle, no box\", \"brand new in plastic, no box\". Vague \"brand new\" or \"sealed\" alone does NOT trigger HSO — those stay Grade A. The default ceiling for ANY used iPhone is Grade A, listed at the top of this page."),
+    # NEW conditions (live in iphone-new.html)
+    "Sealed": ("Sealed Prices — DEFAULT for \"sealed\" / \"brand new in box\" / \"still in box\" / \"never opened\"",
+               "Quote a Sealed price when the seller says the device is sealed in its original Apple box and has never been opened. Trigger phrases: \"sealed\", \"brand new in box\", \"still in box\", \"never opened\", \"factory sealed\"."),
+    "Open Box": ("Open Box Prices — for \"opened but never used\"",
+                 "Quote an Open Box price when the seller says the box has been opened but the device was never used or activated."),
+    "Sealed (Activated)": ("Sealed (Activated) Prices — for sealed-in-box devices that have been activated",
+                           "Quote a Sealed (Activated) price when the seller says the device is sealed in box but Apple activation has started (clock has begun)."),
+    "Sealed Activated": ("Sealed (Activated) Prices — for sealed-in-box devices that have been activated",
+                         "Quote a Sealed (Activated) price when the seller says the device is sealed in box but Apple activation has started."),
+    "SWAP HSO": ("SWAP HSO Prices — for \"brand new + no box\" / \"0 cycle no box\" / \"factory fresh no box\"",
+                 "Quote a SWAP HSO price ONLY when the seller explicitly says the device is brand new AND has no box. Trigger phrases: \"brand new without the box\", \"never used, no box\", \"factory new no box\", \"0 cycle, no box\", \"brand new in plastic, no box\". Vague \"brand new\" or \"sealed\" alone does NOT trigger SWAP HSO — those map to Sealed (above on this page) for newer models or Grade A (in iphone-used.html) for older models."),
 }
 
 def render_category_html(cat, title, records, page_blurb):
-    """Render a per-category HTML file. USED iPhones group by CONDITION first, then model.
-    Other categories group by model."""
-    is_used_iphone = (cat == "iphone-used")
+    """Render a per-category HTML file. iPhone files (new and used) group by CONDITION
+    first so each condition lives in its own retrievable chunk. Other categories
+    (iPad, Samsung, etc.) group by model."""
+    iphone_condition_first = cat in ("iphone-used", "iphone-new")
     today_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     html = []
     html.append('<!DOCTYPE html>')
@@ -106,13 +123,17 @@ def render_category_html(cat, title, records, page_blurb):
     html.append(f'<p><strong>Category:</strong> {page_blurb} For other categories see welcome.html, iphone-new.html, iphone-used.html, ipad.html, samsung.html, watch.html, airpods.html, gaming.html on the same repo.</p>')
     html.append('')
 
-    if is_used_iphone:
-        # Group by CONDITION first. Each condition gets its own <h2> section
-        # with a strong header that travels with retrieved chunks.
+    if iphone_condition_first:
+        # iphone-used: USED grades only (Grade A → DOA). HSO is excluded — it's in iphone-new.
+        # iphone-new: NEW conditions (Sealed → Sealed Activated) + SWAP HSO.
+        if cat == "iphone-used":
+            cond_order = ["Grade A", "Grade B", "Grade C", "Grade D", "DOA"]
+        else:  # iphone-new
+            cond_order = ["Sealed", "Open Box", "Sealed (Activated)", "Sealed Activated", "SWAP HSO"]
         by_cond = defaultdict(list)
         for r in records:
             by_cond[r["condition"]].append(r)
-        for cond in USED_ORDER:
+        for cond in cond_order:
             entries = by_cond.get(cond, [])
             if not entries:
                 continue
@@ -134,7 +155,7 @@ def render_category_html(cat, title, records, page_blurb):
                     html.append(f'<p>{e["new_used"]} {e["identifier"]}, {e["condition"]}: ${e["price"]}.</p>')
                 html.append('')
     else:
-        # Group by model in order of first appearance (NEW iPhones, iPad, Samsung, etc.)
+        # Group by model in order of first appearance (iPad, Samsung, Watch, AirPods, Gaming)
         by_model = defaultdict(list)
         model_order = []
         for r in records:
@@ -143,10 +164,7 @@ def render_category_html(cat, title, records, page_blurb):
                 model_order.append(m)
             by_model[m].append(r)
         html.append('<h2>Quick Reference — Price Lookup</h2>')
-        if cat == "iphone-new":
-            html.append('<p>Every NEW price in this category as a single sentence. Conditions: Sealed, Open Box, Sealed (Activated).</p>')
-        else:
-            html.append('<p>Every price in this category as a single sentence.</p>')
+        html.append('<p>Every price in this category as a single sentence.</p>')
         html.append('')
         for model in model_order:
             entries = by_model[model]
@@ -268,14 +286,14 @@ def main():
     # Render each category
     output = {}
     output["iphone-new"] = render_category_html(
-        "iphone-new", "BLT Trading — iPhone Buying Prices (NEW Sealed)",
+        "iphone-new", "BLT Trading — iPhone Buying Prices (Factory-Fresh: Sealed, Open Box, SWAP HSO)",
         by_cat.get("iphone-new", []),
-        "NEW iPhones (Sealed, Open Box, Sealed Activated)."
+        "Factory-fresh iPhones — Sealed, Open Box, Sealed (Activated), and SWAP HSO. SWAP HSO lives here (not in iphone-used) because it represents a never-used device, just without the original box."
     )
     output["iphone-used"] = render_category_html(
-        "iphone-used", "BLT Trading — iPhone Buying Prices (USED)",
+        "iphone-used", "BLT Trading — iPhone Buying Prices (USED Grades A–D, DOA)",
         by_cat.get("iphone-used", []),
-        "USED iPhones (Grade A through DOA, plus SWAP HSO)."
+        "USED iPhones — Grade A, Grade B, Grade C, Grade D, DOA. SWAP HSO is NOT on this page (it lives in iphone-new.html)."
     )
     output["ipad"] = render_category_html(
         "ipad", "BLT Trading — iPad Buying Prices",
