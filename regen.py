@@ -133,6 +133,42 @@ def render_category_html(cat, title, records, page_blurb):
         by_cond = defaultdict(list)
         for r in records:
             by_cond[r["condition"]].append(r)
+
+        # ---------- DEFAULT BUYING PRICES summary section (top of iphone-used.html only) ----------
+        # One line per model giving the smallest-storage SIM-Unlocked Grade A price. This is the
+        # chunk most likely to be retrieved for a naked "<model>" query — and because it's a single
+        # self-contained line, the LLM cannot pick the wrong condition or wrong storage from it.
+        if cat == "iphone-used":
+            html.append('<h2>Default Buying Prices — one line per iPhone model (Grade A, smallest storage, SIM Unlocked)</h2>')
+            html.append('<p>This is the canonical default buying price for each iPhone model. Quote ONE of these lines whenever a seller names a model without specifying storage, lock, or condition. Each line is the Grade A price at the smallest storage tier and SIM Unlocked. For non-default scenarios (carrier-locked, larger storage, scratched/cracked, brand new no box) see the per-condition sections below.</p>')
+            grade_a_entries = by_cond.get("Grade A", [])
+            # Group by model, then within each model find the smallest-storage Unlocked entry
+            ga_by_model = defaultdict(list)
+            ga_model_order = []
+            for r in grade_a_entries:
+                _, m = categorize(r)
+                if m not in ga_by_model:
+                    ga_model_order.append(m)
+                ga_by_model[m].append(r)
+            def _storage_size_kb(ident):
+                m = re.search(r"(\d+)\s*(GB|TB)", ident)
+                if not m:
+                    return 99999
+                n = int(m.group(1))
+                return n * (1024 if m.group(2) == "TB" else 1)
+            for model in ga_model_order:
+                # Pick the smallest-storage Unlocked entry for this model
+                unlocked = [e for e in ga_by_model[model] if "Unlocked" in e["identifier"] and "Carrier" not in e["identifier"]]
+                pool = unlocked if unlocked else ga_by_model[model]
+                pool_sorted = sorted(pool, key=lambda e: _storage_size_kb(e["identifier"]))
+                e = pool_sorted[0]
+                # Extract storage and lock for the human-readable summary
+                storage_m = re.search(r"(\d+(?:GB|TB))", e["identifier"])
+                storage = storage_m.group(1) if storage_m else ""
+                lock = "SIM Unlocked" if "Unlocked" in e["identifier"] and "Carrier" not in e["identifier"] else "Carrier Locked"
+                html.append(f'<p>{model} — Default buying price: ${e["price"]} ({storage} {lock}, Grade A condition, no scratches).</p>')
+            html.append('')
+
         for cond in cond_order:
             entries = by_cond.get(cond, [])
             if not entries:
@@ -152,7 +188,12 @@ def render_category_html(cat, title, records, page_blurb):
             for model in model_order:
                 html.append(f'<h3>{model} — {cond}</h3>')
                 for e in by_model[model]:
-                    html.append(f'<p>{e["new_used"]} {e["identifier"]}, {e["condition"]}: ${e["price"]}.</p>')
+                    if cond == "SWAP HSO":
+                        # Wrap each HSO line so its embedding is dominated by the trigger condition,
+                        # not the model name. Default "<model>" queries should NOT pull these chunks.
+                        html.append(f'<p>Special pricing — applies ONLY when the seller explicitly says the device is brand new AND has no box (e.g. "brand new without the box", "0 cycle no box", "factory new no box"). NEVER quote this for a default query: {e["new_used"]} {e["identifier"]}, {e["condition"]}: ${e["price"]}.</p>')
+                    else:
+                        html.append(f'<p>{e["new_used"]} {e["identifier"]}, {e["condition"]}: ${e["price"]}.</p>')
                 html.append('')
     else:
         # Group by model in order of first appearance (iPad, Samsung, Watch, AirPods, Gaming)
