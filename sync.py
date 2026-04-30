@@ -1,0 +1,793 @@
+#!/usr/bin/env python3
+"""
+BLT Trading price scraper: variant-first HTML generator.
+
+Downloads the public BLT Google Sheet, parses per-category tabs, and generates
+per-category HTML files with GPT-optimized chunking: one <section> per device
+variant (model + storage + lock), with all grade prices inside.
+"""
+import os
+import re
+import sys
+import datetime
+from pathlib import Path
+from collections import defaultdict
+import requests
+from openpyxl import load_workbook
+
+# Constants
+XLSX_URL = "https://docs.google.com/spreadsheets/d/1Cg1ZuaILPJbEdqbgd01PjUESbZh3h3TaK-NB9oSBMLc/export?format=xlsx"
+BLT_XLSX_PATH = "/tmp/blt.xlsx"
+OUTDIR = Path(os.environ.get("BLT_OUTDIR", "."))
+OUTDIR.mkdir(parents=True, exist_ok=True)
+
+# ===== Data structures =====
+
+class PriceEntry:
+    """One price entry: device variant + condition + price."""
+    def __init__(self, category, model, storage, lock, condition, price, new_used="USED"):
+        self.category = category
+        self.model = model
+        self.storage = storage
+        self.lock = lock
+        self.condition = condition
+        self.price = price
+        self.new_used = new_used
+        self.variant_key = (self.model, self.storage, self.lock)
+
+    def identifier(self):
+        """Human-readable identifier."""
+        parts = [self.model]
+        if self.storage:
+            parts.append(self.storage)
+        parts.append(self.lock)
+        return " ".join(parts)
+
+    def __repr__(self):
+        return f"PriceEntry({self.category}, {self.identifier()}, {self.condition}, ${self.price})"
+
+
+# ===== Parsing functions =====
+
+def download_xlsx():
+    """Download XLSX from Google Sheet."""
+    print(f"Downloading {XLSX_URL}...")
+    r = requests.get(XLSX_URL)
+    r.raise_for_status()
+    Path(BLT_XLSX_PATH).write_bytes(r.content)
+    print(f"Saved to {BLT_XLSX_PATH}")
+
+
+def parse_iphone_used(ws):
+    """Parse 'Used iphone ' tab (USED iPhones)."""
+    entries = []
+    max_row = ws.max_row
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        if not cell_a or not isinstance(cell_a, str):
+            continue
+
+        cell_a = cell_a.strip()
+        if not cell_a.startswith("iPhone "):
+            continue
+
+        m = re.match(r"iPhone\s+(.+?)\s+(\d+(?:GB|TB))\s+(Unlocked|Locked)$", cell_a)
+        if not m:
+            continue
+
+        model = f"iPhone {m.group(1)}"
+        storage = m.group(2)
+        lock_str = m.group(3)
+
+        conditions = [
+            ("SWAP HSO", "B"),
+            ("Grade A", "C"),
+            ("Grade B", "D"),
+            ("Grade C", "E"),
+            ("Grade D", "F"),
+            ("DOA", "G"),
+        ]
+
+        for cond_name, col in conditions:
+            price_cell = ws[f"{col}{row_idx}"].value
+            if price_cell is None or price_cell == "-":
+                continue
+            try:
+                price = int(float(str(price_cell).replace(",", "")))
+            except (ValueError, TypeError):
+                continue
+
+            lock = "Carrier Locked" if lock_str == "Locked" else "Unlocked"
+
+            entries.append(PriceEntry(
+                category="iphone-used",
+                model=model,
+                storage=storage,
+                lock=lock,
+                condition=cond_name,
+                price=price,
+                new_used="USED"
+            ))
+
+    return entries
+
+
+def parse_iphone_new(ws):
+    """Parse 'New Iphone' tab (NEW iPhones)."""
+    entries = []
+    max_row = ws.max_row
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        if not cell_a or not isinstance(cell_a, str):
+            continue
+
+        cell_a = cell_a.strip()
+        if not cell_a.startswith("iPhone "):
+            continue
+
+        m = re.match(r"iPhone\s+(.+?)\s+(\d+(?:GB|TB))\s+(Unlocked|Locked)$", cell_a)
+        if not m:
+            continue
+
+        model = f"iPhone {m.group(1)}"
+        storage = m.group(2)
+        lock_str = m.group(3)
+        lock = "Carrier Locked" if lock_str == "Locked" else "Unlocked"
+
+        sealed_cells = [
+            ws[f"B{row_idx}"].value,
+            ws[f"C{row_idx}"].value,
+            ws[f"D{row_idx}"].value,
+        ]
+        open_cell = ws[f"E{row_idx}"].value
+        activated_cell = ws[f"F{row_idx}"].value
+
+        sealed_price = None
+        for cell in sealed_cells:
+            if cell and cell != "-":
+                try:
+                    sealed_price = int(float(str(cell).replace(",", "")))
+                    break
+                except (ValueError, TypeError):
+                    pass
+
+        if sealed_price:
+            entries.append(PriceEntry(
+                category="iphone-new",
+                model=model,
+                storage=storage,
+                lock=lock,
+                condition="Sealed",
+                price=sealed_price,
+                new_used="NEW"
+            ))
+
+        if open_cell and open_cell != "-":
+            try:
+                open_price = int(float(str(open_cell).replace(",", "")))
+                entries.append(PriceEntry(
+                    category="iphone-new",
+                    model=model,
+                    storage=storage,
+                    lock=lock,
+                    condition="Open Box",
+                    price=open_price,
+                    new_used="NEW"
+                ))
+            except (ValueError, TypeError):
+                pass
+
+        if activated_cell and activated_cell != "-":
+            try:
+                activated_price = int(float(str(activated_cell).replace(",", "")))
+                entries.append(PriceEntry(
+                    category="iphone-new",
+                    model=model,
+                    storage=storage,
+                    lock=lock,
+                    condition="Sealed (Activated)",
+                    price=activated_price,
+                    new_used="NEW"
+                ))
+            except (ValueError, TypeError):
+                pass
+
+    return entries
+
+
+def parse_ipad_used(ws):
+    """Parse 'Used ipads ' tab (USED iPads)."""
+    entries = []
+    max_row = ws.max_row
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        if not cell_a:
+            continue
+
+        cell_a = str(cell_a).strip()
+
+        if not cell_a.startswith("iPad"):
+            continue
+
+        conditions = [
+            ("Grade A", "B"),
+            ("Grade B+", "C"),
+            ("Grade B", "D"),
+            ("Grade C", "E"),
+            ("Grade D", "F"),
+            ("DOA", "G"),
+        ]
+
+        storage = None
+        lock = "WiFi"
+
+        m = re.search(r"(\d+(?:GB|TB))", cell_a)
+        if m:
+            storage = m.group(1)
+
+        if "Cellular" in cell_a:
+            lock = "Cellular"
+        elif "Verizon" in cell_a:
+            lock = "Verizon"
+
+        model_match = re.match(r"(iPad[^,\d]*)", cell_a)
+        model = model_match.group(1).strip() if model_match else "iPad"
+
+        for cond_name, col in conditions:
+            price_cell = ws[f"{col}{row_idx}"].value
+            if price_cell is None or price_cell == "-":
+                continue
+            try:
+                price = int(float(str(price_cell).replace(",", "")))
+            except (ValueError, TypeError):
+                continue
+
+            entries.append(PriceEntry(
+                category="ipad",
+                model=model,
+                storage=storage,
+                lock=lock,
+                condition=cond_name,
+                price=price,
+                new_used="USED"
+            ))
+
+    return entries
+
+
+def parse_ipad_new(ws):
+    """Parse 'New ipads' tab (NEW iPads)."""
+    entries = []
+    max_row = ws.max_row
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        if not cell_a:
+            continue
+
+        cell_a = str(cell_a).strip()
+        if not cell_a.startswith("iPad"):
+            continue
+
+        storage = None
+        lock = "WiFi"
+
+        m = re.search(r"(\d+(?:GB|TB))", cell_a)
+        if m:
+            storage = m.group(1)
+
+        if "Cellular" in cell_a:
+            lock = "Cellular"
+        elif "Verizon" in cell_a:
+            lock = "Verizon"
+
+        model_match = re.match(r"(iPad[^,\d]*)", cell_a)
+        model = model_match.group(1).strip() if model_match else "iPad"
+
+        conditions = [
+            ("Sealed", "B"),
+            ("Open Box", "C"),
+            ("Sealed (Activated)", "D"),
+        ]
+
+        for cond_name, col in conditions:
+            price_cell = ws[f"{col}{row_idx}"].value
+            if price_cell is None or price_cell == "-":
+                continue
+            try:
+                price = int(float(str(price_cell).replace(",", "")))
+            except (ValueError, TypeError):
+                continue
+
+            entries.append(PriceEntry(
+                category="ipad",
+                model=model,
+                storage=storage,
+                lock=lock,
+                condition=cond_name,
+                price=price,
+                new_used="NEW"
+            ))
+
+    return entries
+
+
+def parse_samsung(ws):
+    """Parse 'Samsung' tab."""
+    entries = []
+    max_row = ws.max_row
+    current_model = None
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        cell_b = ws[f"B{row_idx}"].value
+
+        if not cell_a and not cell_b:
+            continue
+
+        cell_a = str(cell_a).strip() if cell_a else ""
+        cell_b = str(cell_b).strip() if cell_b else ""
+
+        if cell_a and "Unlocked" in cell_b:
+            current_model = cell_a
+            lock = "Unlocked"
+        elif not cell_a and "Locked" in cell_b:
+            lock = "Carrier Locked"
+        else:
+            continue
+
+        if not current_model:
+            continue
+
+        conditions = [
+            ("Sealed", "C", "NEW"),
+            ("Grade A", "D", "USED"),
+            ("Grade B", "E", "USED"),
+            ("Grade C", "F", "USED"),
+            ("Grade D", "G", "USED"),
+            ("DOA", "H", "USED"),
+        ]
+
+        for cond_name, col, new_used in conditions:
+            price_cell = ws[f"{col}{row_idx}"].value
+            if price_cell is None or price_cell == "-":
+                continue
+            try:
+                price = int(float(str(price_cell).replace(",", "")))
+            except (ValueError, TypeError):
+                continue
+
+            entries.append(PriceEntry(
+                category="samsung",
+                model=current_model,
+                storage=None,
+                lock=lock,
+                condition=cond_name,
+                price=price,
+                new_used=new_used
+            ))
+
+    return entries
+
+
+def parse_watch(ws):
+    """Parse 'Apple watch ' tab."""
+    entries = []
+    max_row = ws.max_row
+    current_model = None
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        if not cell_a:
+            continue
+
+        cell_a = str(cell_a).strip()
+
+        if re.match(r"^Series \d+$", cell_a):
+            current_model = cell_a
+            continue
+
+        if not cell_a.startswith("Series") and current_model:
+            variant = cell_a
+        else:
+            continue
+
+        conditions = [
+            ("Sealed", "B", "NEW"),
+            ("Open Box", "C", "NEW"),
+            ("Grade A", "D", "USED"),
+            ("Grade B", "E", "USED"),
+            ("Grade C", "F", "USED"),
+            ("Grade D", "G", "USED"),
+        ]
+
+        for cond_name, col, new_used in conditions:
+            price_cell = ws[f"{col}{row_idx}"].value
+            if price_cell is None or price_cell == "-":
+                continue
+            try:
+                price = int(float(str(price_cell).replace(",", "")))
+            except (ValueError, TypeError):
+                continue
+
+            entries.append(PriceEntry(
+                category="watch",
+                model=variant,
+                storage=None,
+                lock=None,
+                condition=cond_name,
+                price=price,
+                new_used=new_used
+            ))
+
+    return entries
+
+
+def parse_gaming(ws):
+    """Parse 'switch- PS5' tab."""
+    entries = []
+    max_row = ws.max_row
+
+    for row_idx in range(2, max_row + 1):
+        cell_a = ws[f"A{row_idx}"].value
+        if not cell_a:
+            continue
+
+        cell_a = str(cell_a).strip()
+        cell_a = cell_a.lstrip("•").strip()
+
+        if not cell_a:
+            continue
+
+        conditions = [
+            ("Sealed", "B", "NEW"),
+            ("Open Box", "C", "NEW"),
+        ]
+
+        for cond_name, col, new_used in conditions:
+            price_cell = ws[f"{col}{row_idx}"].value
+            if price_cell is None or price_cell == "-":
+                continue
+            try:
+                price = int(float(str(price_cell).replace(",", "")))
+            except (ValueError, TypeError):
+                continue
+
+            entries.append(PriceEntry(
+                category="gaming",
+                model=cell_a,
+                storage=None,
+                lock=None,
+                condition=cond_name,
+                price=price,
+                new_used=new_used
+            ))
+
+    return entries
+
+
+# ===== HTML generation =====
+
+def render_section(variant_key, entries):
+    """Render one <section> for a device variant with all conditions."""
+    model, storage, lock = variant_key
+
+    parts = [model]
+    if storage:
+        parts.append(storage)
+    if lock:
+        parts.append(lock)
+    identifier = " ".join(parts)
+
+    # Header keyword expansion: include carrier names so seller queries like
+    # "iPhone 14 Pro Max 128GB AT&T" hit this chunk via vector retrieval.
+    if lock and "Carrier" in lock:
+        base = f"{model} {storage}".strip() if storage else model
+        header_id = f"{base} AT&amp;T / T-Mobile / Sprint / Verizon / Carrier Locked"
+    elif lock and lock == "Unlocked":
+        base = f"{model} {storage}".strip() if storage else model
+        header_id = f"{base} SIM Unlocked / Factory Unlocked"
+    else:
+        header_id = identifier
+
+    grade_order = {
+        "Grade A": 0, "Grade B": 1, "Grade B+": 2, "Grade C": 3, "Grade D": 4,
+        "DOA": 5, "SWAP HSO": 6, "Sealed": 0, "Open Box": 1, "Sealed (Activated)": 2,
+    }
+    entries_sorted = sorted(entries, key=lambda e: grade_order.get(e.condition, 99))
+
+    default_entry = next((e for e in entries_sorted if e.condition in ("Grade A", "Sealed")), entries_sorted[0] if entries_sorted else None)
+    default_price = f"${default_entry.price}" if default_entry else "$?"
+
+    html = []
+    html.append("<section>")
+    html.append(f"<h2>{header_id}</h2>")
+
+    parts_desc = [f"<strong>Device:</strong> {model}"]
+    if storage:
+        parts_desc.append(f"<strong>Storage:</strong> {storage}")
+    if lock:
+        if "Carrier" in lock:
+            parts_desc.append(f"<strong>Lock:</strong> {lock} (AT&amp;T, T-Mobile, Sprint, US Cellular all priced same)")
+        else:
+            parts_desc.append(f"<strong>Lock:</strong> {lock}")
+
+    html.append(f"<p>{' | '.join(parts_desc)}</p>")
+
+    default_cond = default_entry.condition if default_entry else "Grade A"
+    html.append(f"<p><strong>Default quote when seller doesn't specify condition: {default_price} ({default_cond}).</strong></p>")
+
+    html.append("<ul>")
+    for entry in entries_sorted:
+        cond = entry.condition
+        price = f"${entry.price}"
+
+        grades = {
+            "Grade A": "no scratches, mint, like new",
+            "Grade B": "light use, no cracks, fully functional",
+            "Grade B+": "light use, no cracks, fully functional",
+            "Grade C": "cracked screen, hairline crack, heavy scratches",
+            "Grade D": "bad LCD, dead pixels, lines on screen",
+            "DOA": "won't power, water damage",
+            "Sealed": "factory-sealed, brand new, never opened",
+            "Open Box": "opened, brand new, never used",
+            "Sealed (Activated)": "sealed in box, activation started",
+            "SWAP HSO": "factory-fresh, never used, no original box",
+        }
+
+        desc = grades.get(cond, "")
+
+        if cond == default_cond:
+            html.append(f"<li><strong>{cond}</strong> — {desc} — <strong>{price}</strong> (DEFAULT)</li>")
+        elif cond == "SWAP HSO":
+            html.append(f"<li><strong>{cond}</strong> — {desc} — REQUIRES seller to explicitly say all three: brand new + never used + no box (e.g. \"0 cycle no box\") — <strong>{price}</strong></li>")
+        else:
+            html.append(f"<li><strong>{cond}</strong> — {desc} — <strong>{price}</strong></li>")
+
+    html.append("</ul>")
+    # Alternate query phrasings for vector retrieval
+    alt_queries = [identifier]
+    if lock and "Carrier" in lock:
+        base = f"{model} {storage}".strip() if storage else model
+        alt_queries = [
+            f"{base} AT&amp;T",
+            f"{base} T-Mobile",
+            f"{base} Sprint",
+            f"{base} US Cellular",
+            f"{base} carrier locked",
+            f"{base} locked",
+        ]
+    elif lock and lock == "Unlocked":
+        base = f"{model} {storage}".strip() if storage else model
+        alt_queries = [
+            f"{base} unlocked",
+            f"{base} SIM unlocked",
+            f"{base} factory unlocked",
+        ]
+    alt_text = " / ".join(f'"{q}"' for q in alt_queries)
+    html.append(f"<p>For seller queries like {alt_text} — the {default_cond} default quote is {default_price}.</p>")
+    html.append("</section>")
+    return "\n".join(html)
+
+
+def render_category_html(category, title, entries):
+    """Render a category HTML file."""
+    today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
+
+    html = []
+    html.append("<!DOCTYPE html>")
+    html.append('<html lang="en"><head><meta charset="UTF-8">')
+    html.append(f"<title>{title}</title></head>")
+    html.append("<body>")
+    html.append(f"<h1>{title}</h1>")
+    html.append(f"<p><strong>Last Updated:</strong> {today_utc}</p>")
+    html.append("<p><strong>Format note for the bot:</strong> Each section below is one device variant (model + storage + lock). All condition prices for that exact variant are inside the section. Quote the price from the matching variant's section — never mix sections.</p>")
+    html.append("")
+
+    by_variant = defaultdict(list)
+    for entry in entries:
+        by_variant[entry.variant_key].append(entry)
+
+    variant_order = sorted(by_variant.keys())
+
+    for variant_key in variant_order:
+        section_html = render_section(variant_key, by_variant[variant_key])
+        html.append(section_html)
+        html.append("")
+
+    html.append("<h2>Grading Reference</h2>")
+    html.append("<p><strong>Grade A:</strong> Used, no scratches, fully functional. Default for sellers who don't specify condition.</p>")
+    html.append("<p><strong>Grade B:</strong> Used, light wear, no cracks, fully functional.</p>")
+    html.append("<p><strong>Grade C:</strong> Used, cracked screen / hairline crack / heavy scratches, fully functional.</p>")
+    html.append("<p><strong>Grade D:</strong> Used, bad LCD / dead pixels / lines on screen / black spots.</p>")
+    html.append("<p><strong>DOA:</strong> Dead — won't power, water damage.</p>")
+    html.append("<p><strong>SWAP HSO:</strong> Factory-fresh, zero cycles, but no original box. Never quote unless seller explicitly says \"no box\" + \"never used\".</p>")
+    html.append("<p><strong>Sealed:</strong> Factory-sealed in original box, never opened, never activated.</p>")
+    html.append("<p><strong>Open Box:</strong> Brand new but box has been opened, device never used.</p>")
+    html.append("<p><strong>Sealed (Activated):</strong> Sealed in box but activation has begun.</p>")
+    html.append("")
+    html.append("</body></html>")
+
+    return "\n".join(html)
+
+
+def render_welcome_html():
+    """Render welcome/policies page."""
+    today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
+
+    html = []
+    html.append("<!DOCTYPE html>")
+    html.append('<html lang="en"><head><meta charset="UTF-8">')
+    html.append("<title>BLT Trading — Welcome, Policies &amp; Grading Guide</title></head>")
+    html.append("<body>")
+    html.append("<h1>BLT Trading — Welcome, Policies &amp; Grading Guide</h1>")
+    html.append(f"<p><strong>Last Updated:</strong> {today_utc}</p>")
+    html.append("<p>BLT Trading buys used and brand-new gadgets — phones, iPads, Apple Watches, AirPods, gaming consoles. We do NOT sell, trade-in, repair, unlock, or activate.</p>")
+    html.append("")
+    html.append("<h2>Contact Information</h2>")
+    html.append("<p><strong>Yu</strong> — call or text (909) 664-5589 (default escalation)</p>")
+    html.append("<p><strong>Angelina</strong> — call or text (909) 631-1132 (default escalation)</p>")
+    html.append("<p><strong>Nick</strong> — text only (628) 266-5678 (weekends and after-hours only)</p>")
+    html.append("<p><strong>Email:</strong> info@BLTtradings.com</p>")
+    html.append("<p><strong>Hours:</strong> Mon–Fri 11AM–6PM CST. Closed every Thursday. Saturdays/Sundays by appointment.</p>")
+    html.append("<p><strong>Shipping address:</strong> 2955 Congressman Ln, Dallas, TX 75220</p>")
+    html.append("")
+    html.append("<h2>Payment Methods</h2>")
+    html.append("<p>Cash payment available in DFW Metropolitan area only. Outside DFW: wire transfer, ACH, or Zelle.</p>")
+    html.append("<p>Apple Gift Cards purchased at 78% of face value.</p>")
+    html.append("<p>Free FedEx shipping labels for sellers shipping 5+ devices.</p>")
+    html.append("")
+    html.append("<h2>General Policy</h2>")
+    html.append("<p>Prices can change at any time at our discretion.</p>")
+    html.append("<p>All quoted prices are buying prices — what BLT pays the seller.</p>")
+    html.append("<p>Final price is confirmed only after in-person inspection or device test.</p>")
+    html.append("<p>BLT does not sell devices to customers. BLT does not perform repairs, unlocks, or activations.</p>")
+    html.append("")
+    html.append("<h2>Specialist Routing</h2>")
+    html.append("<p>Models not in the price list: text or call Yu (909) 664-5589 or Angelina (909) 631-1132 to confirm if BLT can still take them.</p>")
+    html.append("<p>Bulk inquiries (5+ devices): same — Yu or Angelina.</p>")
+    html.append("<p>Weekend or after-hours appointments: text Nick at (628) 266-5678 only. Do not contact Yu or Angelina outside business hours.</p>")
+    html.append("")
+    html.append("<h2>Device Grading &amp; Term Guide</h2>")
+    html.append("<p><strong>NEW Sealed:</strong> Factory-sealed, brand new in box, never opened, never activated.</p>")
+    html.append("<p><strong>NEW Open Box:</strong> Brand new but the seal is opened. Never used.</p>")
+    html.append("<p><strong>Sealed (Activated):</strong> Sealed in box but Apple activation has occurred (clock started).</p>")
+    html.append("<p><strong>SWAP / HSO:</strong> Factory-fresh device, zero battery cycles, but without the original box.</p>")
+    html.append("<p><strong>Grade A:</strong> Used, no scratches at all, fully functional.</p>")
+    html.append("<p><strong>Grade B:</strong> Used, light wear, no cracks, fully functional.</p>")
+    html.append("<p><strong>Grade C:</strong> Used, visible scratches or hairline crack/chip, fully functional.</p>")
+    html.append("<p><strong>Grade D:</strong> Used, cracked screen, bad LCD, dead pixels, or heavy damage but powers on.</p>")
+    html.append("<p><strong>DOA:</strong> Dead on arrival — won't power on or has water damage.</p>")
+    html.append("")
+    html.append("</body></html>")
+    return "\n".join(html)
+
+
+def render_aggregate(category_htmls):
+    """Render aggregate prices.html."""
+    today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
+
+    html = []
+    html.append("<!DOCTYPE html>")
+    html.append('<html lang="en"><head><meta charset="UTF-8">')
+    html.append("<title>BLT Trading — Mobile Device Price Sheet</title></head>")
+    html.append("<body>")
+    html.append("<h1>BLT Trading — Mobile Device Price Sheet (Aggregate)</h1>")
+    html.append(f"<p><strong>Last Updated:</strong> {today_utc}</p>")
+    html.append("<p><strong>Note:</strong> Per-category indices live at welcome.html, iphone-new.html, iphone-used.html, ipad.html, samsung.html, watch.html, gaming.html on the same repo.</p>")
+    html.append("")
+
+    for cat, content in category_htmls.items():
+        m = re.search(r"<body>(.*)</body>", content, re.DOTALL)
+        if m:
+            html.append(f"<!-- ===== {cat}.html ===== -->")
+            html.append(m.group(1).strip())
+            html.append("")
+
+    html.append("</body></html>")
+    return "\n".join(html)
+
+
+# ===== Main =====
+
+def main():
+    print("=" * 70)
+    print("BLT Trading Price Scraper — Variant-First HTML Generator")
+    print("=" * 70)
+
+    if not Path(BLT_XLSX_PATH).exists():
+        download_xlsx()
+    else:
+        print(f"Using cached {BLT_XLSX_PATH}")
+
+    print(f"Loading {BLT_XLSX_PATH}...")
+    wb = load_workbook(BLT_XLSX_PATH, data_only=True)
+
+    all_entries = []
+
+    category_data = {
+        "iphone-used": ("Used iphone ", parse_iphone_used),
+        "iphone-new": ("New Iphone", parse_iphone_new),
+        "ipad": (None, lambda ws: parse_ipad_used(ws) + parse_ipad_new(ws)),
+        "samsung": ("Samsung", parse_samsung),
+        "watch": ("Apple watch ", parse_watch),
+        "gaming": ("switch- PS5", parse_gaming),
+    }
+
+    category_entries = {}
+
+    for cat, (sheet_name, parser) in category_data.items():
+        if sheet_name:
+            ws = None
+            if sheet_name in wb.sheetnames:
+                ws = wb[sheet_name]
+            else:
+                for sn in wb.sheetnames:
+                    if sheet_name.lower().strip() in sn.lower().strip():
+                        ws = wb[sn]
+                        break
+
+            if not ws:
+                print(f"  WARN: {sheet_name} not found in workbook")
+                category_entries[cat] = []
+                continue
+
+            entries = parser(ws)
+            category_entries[cat] = entries
+            all_entries.extend(entries)
+            print(f"  {cat}: {len(entries)} entries")
+        else:
+            entries = []
+            for sn in wb.sheetnames:
+                if "ipad" in sn.lower():
+                    entries.extend(parser(wb[sn]))
+            category_entries[cat] = entries
+            all_entries.extend(entries)
+            print(f"  {cat}: {len(entries)} entries")
+
+    print(f"\nTotal entries parsed: {len(all_entries)}")
+
+    category_htmls = {}
+
+    category_info = {
+        "iphone-new": ("BLT Trading — iPhone Buying Prices (Factory-Fresh)", "iphone-new"),
+        "iphone-used": ("BLT Trading — iPhone Buying Prices (USED Grades)", "iphone-used"),
+        "ipad": ("BLT Trading — iPad Buying Prices", "ipad"),
+        "samsung": ("BLT Trading — Samsung Buying Prices", "samsung"),
+        "watch": ("BLT Trading — Apple Watch Buying Prices", "watch"),
+        "gaming": ("BLT Trading — Gaming Console Buying Prices", "gaming"),
+    }
+
+    print("\nGenerating HTML files...")
+
+    for cat, (title, filename) in category_info.items():
+        entries = category_entries.get(cat, [])
+        content = render_category_html(cat, title, entries)
+        category_htmls[cat] = content
+
+        outpath = OUTDIR / f"{filename}.html"
+        outpath.write_text(content)
+        size_kb = len(content) / 1024
+        section_count = content.count("<section>")
+        print(f"  {filename}.html: {len(entries)} entries, {section_count} sections, {size_kb:.1f}KB")
+
+    welcome_content = render_welcome_html()
+    outpath = OUTDIR / "welcome.html"
+    outpath.write_text(welcome_content)
+    print(f"  welcome.html: {len(welcome_content) / 1024:.1f}KB")
+
+    prices_content = render_aggregate(category_htmls)
+    outpath = OUTDIR / "prices.html"
+    outpath.write_text(prices_content)
+    print(f"  prices.html: {len(prices_content) / 1024:.1f}KB")
+
+    print("\n" + "=" * 70)
+    print(f"SUCCESS: Generated 8 HTML files in {OUTDIR}")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()
