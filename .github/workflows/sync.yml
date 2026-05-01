@@ -1,0 +1,42 @@
+name: Sync BLT prices
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # hourly at top of UTC hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openpyxl requests
+
+      - name: Run sync
+        run: python sync.py
+        env:
+          BLT_OUTDIR: .
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "BLT Price Bot"
+          git config user.email "creatoj5@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            ts="$(date -u +%FT%H:%MZ)"
+            git commit -m "Sync BLT prices: ${ts}"
+            git push
+          fi
