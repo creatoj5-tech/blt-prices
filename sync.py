@@ -593,6 +593,34 @@ def render_category_html(category, title, entries):
 
     variant_order = sorted(by_variant.keys())
 
+    # Default Buying Prices summary at top of iphone-used.html — naked queries
+    # like "16 pro max" or "iphone 13" need a short, distinctive chunk to land
+    # on instead of guessing among 189 variant sections.
+    if category == "iphone-used":
+        html.append("<h2>Default Buying Prices — quote these for naked model queries (no storage / lock / condition specified)</h2>")
+        html.append("<p>Each line below is the canonical default for one iPhone model: Grade A condition, smallest storage tier listed, SIM Unlocked. When the seller types just a model name like \"iPhone 14 Pro Max\" or \"16 pro max\" or \"13\" with no other detail, quote the matching line here. Refine to a variant section further down only when the seller adds storage, lock, or condition detail.</p>")
+        def _storage_kb(s):
+            if not s: return 99999
+            m = re.match(r"(\d+)\s*(GB|TB)", s)
+            if not m: return 99999
+            n = int(m.group(1))
+            return n * (1024 if m.group(2) == "TB" else 1)
+        by_model = defaultdict(list)
+        model_order = []
+        for entry in entries:
+            if entry.condition != "Grade A" or entry.lock != "Unlocked":
+                continue
+            if entry.model not in by_model:
+                model_order.append(entry.model)
+            by_model[entry.model].append(entry)
+        for model in model_order:
+            entries_m = sorted(by_model[model], key=lambda e: _storage_kb(e.storage))
+            if not entries_m:
+                continue
+            best = entries_m[0]
+            html.append(f"<p><strong>{model}</strong> — default buying price: <strong>${best.price}</strong> ({best.storage} SIM Unlocked, Grade A, no scratches). For carrier-locked, larger storage, or damaged condition see the variant sections further down this page.</p>")
+        html.append("")
+
     for variant_key in variant_order:
         section_html = render_section(variant_key, by_variant[variant_key])
         html.append(section_html)
