@@ -471,110 +471,285 @@ def parse_gaming(ws):
 
 # ===== HTML generation =====
 
+def _disambig_for(model):
+    """Build a 'NOT X / NOT Y' disambiguation string for a model."""
+    m = re.match(r"^iPhone (\d+)\s*(.*)$", model)
+    if m:
+        num = int(m.group(1))
+        suffix = m.group(2).strip()
+        siblings = []
+        if suffix == "":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num} Pro Max",
+                        f"iPhone {num} Plus", f"iPhone {num}E", f"iPhone {num} Air"]
+        elif suffix.lower() == "pro":
+            siblings = [f"iPhone {num} Pro Max", f"iPhone {num} (base)", f"iPhone {num} Plus"]
+        elif suffix.lower() == "pro max":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num} (base)", f"iPhone {num} Plus"]
+        elif suffix.lower() == "plus":
+            siblings = [f"iPhone {num} (base)", f"iPhone {num} Pro", f"iPhone {num} Pro Max"]
+        elif suffix.upper() in ("E",):
+            siblings = [f"iPhone {num} (base)", f"iPhone {num} Pro"]
+        elif suffix.upper() == "AIR":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num} (base)"]
+        siblings.append(f"iPhone {num-1} {suffix}".strip())
+        siblings.append(f"iPhone {num+1} {suffix}".strip())
+        siblings = [s for s in siblings if s != model]
+        return " — ".join(["DO NOT confuse with " + s for s in siblings[:5]])
+    return ""
+
+
+def _short_lock(lock):
+    if not lock:
+        return ""
+    if "Carrier" in lock:
+        return "Carrier Locked"
+    if lock == "Unlocked":
+        return "SIM Unlocked"
+    return lock
+
+
+def _full_lock_label(lock):
+    if not lock:
+        return ""
+    if "Carrier" in lock:
+        return "AT&amp;T / T-Mobile / Sprint / Verizon / US Cellular Carrier Locked"
+    if lock == "Unlocked":
+        return "SIM Unlocked / Factory Unlocked"
+    return lock
+
+
+GRADE_DESC = {
+    "Grade A": "no scratches, mint, like new",
+    "Grade B": "light use, no cracks, fully functional",
+    "Grade B+": "light use, no cracks, fully functional",
+    "Grade C": "cracked screen, hairline crack, heavy scratches",
+    "Grade D": "bad LCD, dead pixels, lines on screen",
+    "DOA": "won't power, water damage",
+    "Sealed": "factory-sealed, brand new, never opened",
+    "Open Box": "opened, brand new, never used",
+    "Sealed (Activated)": "sealed in box, activation started",
+    "SWAP HSO": "factory-fresh, never used, no original box — requires seller to explicitly say all three: brand new + never used + no box",
+}
+
+GRADE_ORDER = {
+    "Grade A": 0, "Grade B": 1, "Grade B+": 2, "Grade C": 3, "Grade D": 4,
+    "DOA": 5, "SWAP HSO": 6, "Sealed": 0, "Open Box": 1, "Sealed (Activated)": 2,
+}
+
+
 def render_section(variant_key, entries):
-    """Render one <section> for a device variant with all conditions."""
+    """Render one <section> for a device variant. Every <li> is self-identifying
+    so any GHL retrieval chunk that contains a price line also carries the full
+    model + storage + lock + condition context."""
     model, storage, lock = variant_key
 
-    parts = [model]
+    short_lock = _short_lock(lock)
+    full_lock = _full_lock_label(lock)
+
+    short_id_parts = [model]
     if storage:
-        parts.append(storage)
-    if lock:
-        parts.append(lock)
-    identifier = " ".join(parts)
+        short_id_parts.append(storage)
+    if short_lock:
+        short_id_parts.append(short_lock)
+    short_id = " ".join(short_id_parts)
 
-    # Header keyword expansion: include carrier names so seller queries like
-    # "iPhone 14 Pro Max 128GB AT&T" hit this chunk via vector retrieval.
-    if lock and "Carrier" in lock:
-        base = f"{model} {storage}".strip() if storage else model
-        header_id = f"{base} AT&amp;T / T-Mobile / Sprint / Verizon / Carrier Locked"
-    elif lock and lock == "Unlocked":
-        base = f"{model} {storage}".strip() if storage else model
-        header_id = f"{base} SIM Unlocked / Factory Unlocked"
-    else:
-        header_id = identifier
+    header_parts = [model]
+    if storage:
+        header_parts.append(storage)
+    if full_lock:
+        header_parts.append(full_lock)
+    header_id = " ".join(header_parts)
 
-    grade_order = {
-        "Grade A": 0, "Grade B": 1, "Grade B+": 2, "Grade C": 3, "Grade D": 4,
-        "DOA": 5, "SWAP HSO": 6, "Sealed": 0, "Open Box": 1, "Sealed (Activated)": 2,
-    }
-    entries_sorted = sorted(entries, key=lambda e: grade_order.get(e.condition, 99))
-
-    default_entry = next((e for e in entries_sorted if e.condition in ("Grade A", "Sealed")), entries_sorted[0] if entries_sorted else None)
+    entries_sorted = sorted(entries, key=lambda e: GRADE_ORDER.get(e.condition, 99))
+    default_entry = next(
+        (e for e in entries_sorted if e.condition in ("Grade A", "Sealed")),
+        entries_sorted[0] if entries_sorted else None,
+    )
     default_price = f"${default_entry.price}" if default_entry else "$?"
+    default_cond = default_entry.condition if default_entry else "Grade A"
+
+    disambig = _disambig_for(model)
 
     html = []
     html.append("<section>")
     html.append(f"<h2>{header_id}</h2>")
-
-    parts_desc = [f"<strong>Device:</strong> {model}"]
-    if storage:
-        parts_desc.append(f"<strong>Storage:</strong> {storage}")
-    if lock:
-        if "Carrier" in lock:
-            parts_desc.append(f"<strong>Lock:</strong> {lock} (AT&amp;T, T-Mobile, Sprint, US Cellular all priced same)")
-        else:
-            parts_desc.append(f"<strong>Lock:</strong> {lock}")
-
-    html.append(f"<p>{' | '.join(parts_desc)}</p>")
-
-    default_cond = default_entry.condition if default_entry else "Grade A"
-    html.append(f"<p><strong>Default quote when seller doesn't specify condition: {default_price} ({default_cond}).</strong></p>")
+    if disambig:
+        html.append(f"<p><em>This section is the {short_id} ONLY. {disambig}.</em></p>")
+    html.append(
+        f"<p>Variant: <strong>{short_id}</strong>. Default buying price for this exact variant when seller does not specify condition: <strong>{default_price}</strong> ({default_cond}).</p>"
+    )
 
     html.append("<ul>")
     for entry in entries_sorted:
         cond = entry.condition
         price = f"${entry.price}"
-
-        grades = {
-            "Grade A": "no scratches, mint, like new",
-            "Grade B": "light use, no cracks, fully functional",
-            "Grade B+": "light use, no cracks, fully functional",
-            "Grade C": "cracked screen, hairline crack, heavy scratches",
-            "Grade D": "bad LCD, dead pixels, lines on screen",
-            "DOA": "won't power, water damage",
-            "Sealed": "factory-sealed, brand new, never opened",
-            "Open Box": "opened, brand new, never used",
-            "Sealed (Activated)": "sealed in box, activation started",
-            "SWAP HSO": "factory-fresh, never used, no original box",
-        }
-
-        desc = grades.get(cond, "")
-
-        if cond == default_cond:
-            html.append(f"<li><strong>{cond}</strong> — {desc} — <strong>{price}</strong> (DEFAULT)</li>")
-        elif cond == "SWAP HSO":
-            html.append(f"<li><strong>{cond}</strong> — {desc} — REQUIRES seller to explicitly say all three: brand new + never used + no box (e.g. \"0 cycle no box\") — <strong>{price}</strong></li>")
-        else:
-            html.append(f"<li><strong>{cond}</strong> — {desc} — <strong>{price}</strong></li>")
-
+        desc = GRADE_DESC.get(cond, "")
+        default_marker = " (DEFAULT)" if cond == default_cond else ""
+        # Self-identifying line: chunked retrieval still knows what model this is
+        html.append(
+            f"<li><strong>{short_id} — {cond}:</strong> {price} ({desc}){default_marker}</li>"
+        )
     html.append("</ul>")
-    # Alternate query phrasings for vector retrieval
-    alt_queries = [identifier]
-    if lock and "Carrier" in lock:
-        base = f"{model} {storage}".strip() if storage else model
-        alt_queries = [
-            f"{base} AT&amp;T",
-            f"{base} T-Mobile",
-            f"{base} Sprint",
-            f"{base} US Cellular",
-            f"{base} carrier locked",
-            f"{base} locked",
-        ]
-    elif lock and lock == "Unlocked":
-        base = f"{model} {storage}".strip() if storage else model
-        alt_queries = [
-            f"{base} unlocked",
-            f"{base} SIM unlocked",
-            f"{base} factory unlocked",
-        ]
-    alt_text = " / ".join(f'"{q}"' for q in alt_queries)
-    html.append(f"<p>For seller queries like {alt_text} — the {default_cond} default quote is {default_price}.</p>")
+
+    # Footer paraphrase — extra retrieval surface area
+    html.append(
+        f"<p>Seller queries that should land on this section: \"{short_id}\", \"{model} {storage or ''} {short_lock}\". Quote {default_price} ({default_cond}) unless the seller explicitly names a different condition above. End every USED quote with: \"Prices can change at any time at our discretion.\"</p>"
+    )
     html.append("</section>")
     return "\n".join(html)
 
 
+def _storage_kb(s):
+    if not s:
+        return 99999
+    m = re.match(r"(\d+)\s*(GB|TB)", s)
+    if not m:
+        return 99999
+    n = int(m.group(1))
+    return n * (1024 if m.group(2) == "TB" else 1)
+
+
+def render_quick_answers(all_entries):
+    """The Quick Answers block — one canonical default sentence per model.
+    Goes at the very top of prices.html so short queries like "16 pro" or "17"
+    or "16 pro max" land here first instead of inside a buried variant section."""
+    html = []
+    html.append('<h1>QUICK ANSWERS — DEFAULT BUYING PRICES (read this first)</h1>')
+    html.append(
+        "<p>This block is the canonical default for every device. When a seller types JUST a model name "
+        "(e.g. \"17 pro\", \"16 pro max\", \"iPhone 13\", \"iPad Pro 11\", \"Series 9\", \"AirPods Pro 2\") "
+        "with no storage, lock, or condition, quote the matching line below and only the matching line. "
+        "The variant sections farther down on this page are ONLY for refinement when the seller adds more detail "
+        "(different storage, carrier-locked, sealed, scratched, cracked, etc.).</p>"
+    )
+    html.append(
+        "<p><strong>Rule:</strong> never reply \"that model isn't on our buying list\" for any iPhone 14, 15, 16, or 17 "
+        "(any variant — base, Plus, Pro, Pro Max, Air, E). They are all listed below. If the seller's exact wording isn't found, "
+        "ask them to repeat the full model name; do not escalate.</p>"
+    )
+
+    # ---------- iPhones ----------
+    used_iphones = {}
+    for e in all_entries:
+        if e.category != "iphone-used":
+            continue
+        if e.condition != "Grade A" or e.lock != "Unlocked":
+            continue
+        used_iphones.setdefault(e.model, []).append(e)
+
+    if used_iphones:
+        html.append("<h2>iPhone (USED Grade A, smallest storage, SIM Unlocked) — naked-query defaults</h2>")
+        # Order: 17 series, 16 series, 15 series, 14 series, 13 series, 12 series, etc.
+        def _iphone_key(model):
+            m = re.match(r"iPhone (\d+)\s*(.*)$", model)
+            if not m:
+                return (0, model)
+            num = int(m.group(1))
+            suffix = m.group(2).strip().lower()
+            suffix_order = {"pro max": 0, "pro": 1, "air": 2, "plus": 3, "": 4, "e": 5, "mini": 6}
+            return (-num, suffix_order.get(suffix, 99), model)
+        for model in sorted(used_iphones.keys(), key=_iphone_key):
+            entries_m = sorted(used_iphones[model], key=lambda e: _storage_kb(e.storage))
+            best = entries_m[0]
+            disambig = _disambig_for(model)
+            line = (
+                f"<p><strong>{model}</strong> — naked-query default <strong>${best.price}</strong> "
+                f"({best.storage} SIM Unlocked Grade A). "
+                f"Reply template: \"If it's SIM unlocked with no scratches at all, we can offer up to ${best.price} "
+                f"for the {best.storage} {model}. Prices can change at any time at our discretion.\""
+            )
+            if disambig:
+                line += f" <em>{disambig}.</em>"
+            line += "</p>"
+            html.append(line)
+
+    # ---------- iPads ----------
+    ipads = {}
+    for e in all_entries:
+        if e.category != "ipad":
+            continue
+        if e.condition != "Grade A":
+            continue
+        # iPads: prefer WiFi for naked default
+        if e.lock not in ("WiFi", "Cellular"):
+            continue
+        ipads.setdefault(e.model, []).append(e)
+
+    if ipads:
+        html.append("<h2>iPad (USED Grade A, smallest storage, WiFi or Cellular) — naked-query defaults</h2>")
+        for model in sorted(ipads.keys()):
+            entries_m = sorted(ipads[model], key=lambda e: _storage_kb(e.storage))
+            best = entries_m[0]
+            html.append(
+                f"<p><strong>{model}</strong> — naked-query default <strong>${best.price}</strong> "
+                f"({best.storage} {best.lock} Grade A). "
+                f"Reply template: \"With no scratches at all, we can offer up to ${best.price} for the "
+                f"{best.storage} {model}. Prices can change at any time at our discretion.\"</p>"
+            )
+
+    # ---------- Samsung ----------
+    samsung = {}
+    for e in all_entries:
+        if e.category != "samsung":
+            continue
+        if e.condition != "Grade A" or e.lock != "Unlocked":
+            continue
+        samsung.setdefault(e.model, []).append(e)
+
+    if samsung:
+        html.append("<h2>Samsung (USED Grade A, SIM Unlocked) — naked-query defaults</h2>")
+        for model in sorted(samsung.keys()):
+            entries_m = samsung[model]
+            best = entries_m[0]
+            html.append(
+                f"<p><strong>{model}</strong> — naked-query default <strong>${best.price}</strong> "
+                f"(SIM Unlocked Grade A). "
+                f"Reply template: \"If it's SIM unlocked with no scratches at all, we can offer up to ${best.price} "
+                f"for the {model}. Prices can change at any time at our discretion.\"</p>"
+            )
+
+    # ---------- Apple Watch ----------
+    watch = {}
+    for e in all_entries:
+        if e.category != "watch":
+            continue
+        if e.condition != "Grade A":
+            continue
+        watch.setdefault(e.model, []).append(e)
+
+    if watch:
+        html.append("<h2>Apple Watch (USED Grade A) — naked-query defaults</h2>")
+        for model in sorted(watch.keys()):
+            best = watch[model][0]
+            html.append(
+                f"<p><strong>Apple Watch {model}</strong> — naked-query default <strong>${best.price}</strong> "
+                f"(Grade A). Reply template: \"With no scratches at all, we can offer up to ${best.price} for the "
+                f"Apple Watch {model}. Prices can change at any time at our discretion.\"</p>"
+            )
+
+    # ---------- Gaming ----------
+    gaming = {}
+    for e in all_entries:
+        if e.category != "gaming":
+            continue
+        if e.condition != "Sealed":
+            continue
+        gaming.setdefault(e.model, []).append(e)
+
+    if gaming:
+        html.append("<h2>Gaming consoles (NEW Sealed) — naked-query defaults</h2>")
+        for model in sorted(gaming.keys()):
+            best = gaming[model][0]
+            html.append(
+                f"<p><strong>{model}</strong> — naked-query default <strong>${best.price}</strong> (Sealed). "
+                f"Reply template: \"If it's sealed in box, we can offer up to ${best.price} for the {model}.\"</p>"
+            )
+
+    return "\n".join(html)
+
+
 def render_category_html(category, title, entries):
-    """Render a category HTML file."""
+    """Render a per-category HTML file (iphone-used.html, ipad.html, etc.)."""
     today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
 
     html = []
@@ -593,32 +768,33 @@ def render_category_html(category, title, entries):
 
     variant_order = sorted(by_variant.keys())
 
-    # Default Buying Prices summary at top of iphone-used.html — naked queries
-    # like "16 pro max" or "iphone 13" need a short, distinctive chunk to land
-    # on instead of guessing among 189 variant sections.
+    # Per-category quick answers at the top
     if category == "iphone-used":
         html.append("<h2>Default Buying Prices — quote these for naked model queries (no storage / lock / condition specified)</h2>")
-        html.append("<p>Each line below is the canonical default for one iPhone model: Grade A condition, smallest storage tier listed, SIM Unlocked. When the seller types just a model name like \"iPhone 14 Pro Max\" or \"16 pro max\" or \"13\" with no other detail, quote the matching line here. Refine to a variant section further down only when the seller adds storage, lock, or condition detail.</p>")
-        def _storage_kb(s):
-            if not s: return 99999
-            m = re.match(r"(\d+)\s*(GB|TB)", s)
-            if not m: return 99999
-            n = int(m.group(1))
-            return n * (1024 if m.group(2) == "TB" else 1)
-        by_model = defaultdict(list)
-        model_order = []
+        html.append("<p>Each line below is the canonical default for one iPhone model: Grade A condition, smallest storage tier listed, SIM Unlocked.</p>")
+        by_model_local = defaultdict(list)
+        model_order_local = []
         for entry in entries:
             if entry.condition != "Grade A" or entry.lock != "Unlocked":
                 continue
-            if entry.model not in by_model:
-                model_order.append(entry.model)
-            by_model[entry.model].append(entry)
-        for model in model_order:
-            entries_m = sorted(by_model[model], key=lambda e: _storage_kb(e.storage))
+            if entry.model not in by_model_local:
+                model_order_local.append(entry.model)
+            by_model_local[entry.model].append(entry)
+        for model in model_order_local:
+            entries_m = sorted(by_model_local[model], key=lambda e: _storage_kb(e.storage))
             if not entries_m:
                 continue
             best = entries_m[0]
-            html.append(f"<p><strong>{model}</strong> — default buying price: <strong>${best.price}</strong> ({best.storage} SIM Unlocked, Grade A, no scratches). For carrier-locked, larger storage, or damaged condition see the variant sections further down this page.</p>")
+            disambig = _disambig_for(model)
+            line = (
+                f"<p><strong>{model}</strong> — naked-query default <strong>${best.price}</strong> "
+                f"({best.storage} SIM Unlocked Grade A, no scratches). "
+                f"For carrier-locked, larger storage, or damaged condition see the variant sections further down."
+            )
+            if disambig:
+                line += f" <em>{disambig}.</em>"
+            line += "</p>"
+            html.append(line)
         html.append("")
 
     for variant_key in variant_order:
@@ -640,6 +816,54 @@ def render_category_html(category, title, entries):
     html.append("</body></html>")
 
     return "\n".join(html)
+
+
+def render_aggregate(category_htmls, all_entries):
+    """Aggregate prices.html — Quick Answers FIRST, then per-category content."""
+    today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
+
+    html = []
+    html.append("<!DOCTYPE html>")
+    html.append('<html lang="en"><head><meta charset="UTF-8">')
+    html.append("<title>BLT Trading — Mobile Device Price Sheet</title></head>")
+    html.append("<body>")
+    html.append("<h1>BLT Trading — Mobile Device Price Sheet (Aggregate)</h1>")
+    html.append(f"<p><strong>Last Updated:</strong> {today_utc}</p>")
+    html.append("")
+
+    # Quick Answers FIRST — most important for naked queries
+    html.append(render_quick_answers(all_entries))
+    html.append("")
+    html.append("<hr/>")
+    html.append("<h1>Variant detail sections (per category)</h1>")
+    html.append("<p>The sections below are for refining a quote AFTER the seller specifies storage, lock, or condition. For naked model queries with no detail, see Quick Answers above instead.</p>")
+    html.append("")
+
+    # Then per-category content (variants, grading reference) — but skip the
+    # iphone-used canonical-defaults sub-block since Quick Answers already
+    # covers it more visibly at the top.
+    for cat, content in category_htmls.items():
+        m = re.search(r"<body>(.*)</body>", content, re.DOTALL)
+        if not m:
+            continue
+        body = m.group(1).strip()
+        # Strip the iphone-used internal Default Buying Prices header+block
+        # (Quick Answers above is already a more visible duplicate).
+        if cat == "iphone-used":
+            body = re.sub(
+                r"<h2>Default Buying Prices.*?(?=<section>)",
+                "",
+                body,
+                count=1,
+                flags=re.DOTALL,
+            )
+        html.append(f"<!-- ===== {cat}.html ===== -->")
+        html.append(body)
+        html.append("")
+
+    html.append("</body></html>")
+    return "\n".join(html)
+
 
 
 def render_welcome_html():
@@ -690,31 +914,6 @@ def render_welcome_html():
     html.append("<p><strong>Grade D:</strong> Used, cracked screen, bad LCD, dead pixels, or heavy damage but powers on.</p>")
     html.append("<p><strong>DOA:</strong> Dead on arrival — won't power on or has water damage.</p>")
     html.append("")
-    html.append("</body></html>")
-    return "\n".join(html)
-
-
-def render_aggregate(category_htmls):
-    """Render aggregate prices.html."""
-    today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
-
-    html = []
-    html.append("<!DOCTYPE html>")
-    html.append('<html lang="en"><head><meta charset="UTF-8">')
-    html.append("<title>BLT Trading — Mobile Device Price Sheet</title></head>")
-    html.append("<body>")
-    html.append("<h1>BLT Trading — Mobile Device Price Sheet (Aggregate)</h1>")
-    html.append(f"<p><strong>Last Updated:</strong> {today_utc}</p>")
-    html.append("<p><strong>Note:</strong> Per-category indices live at welcome.html, iphone-new.html, iphone-used.html, ipad.html, samsung.html, watch.html, gaming.html on the same repo.</p>")
-    html.append("")
-
-    for cat, content in category_htmls.items():
-        m = re.search(r"<body>(.*)</body>", content, re.DOTALL)
-        if m:
-            html.append(f"<!-- ===== {cat}.html ===== -->")
-            html.append(m.group(1).strip())
-            html.append("")
-
     html.append("</body></html>")
     return "\n".join(html)
 
@@ -807,7 +1006,7 @@ def main():
     outpath.write_text(welcome_content)
     print(f"  welcome.html: {len(welcome_content) / 1024:.1f}KB")
 
-    prices_content = render_aggregate(category_htmls)
+    prices_content = render_aggregate(category_htmls, all_entries)
     outpath = OUTDIR / "prices.html"
     outpath.write_text(prices_content)
     print(f"  prices.html: {len(prices_content) / 1024:.1f}KB")
