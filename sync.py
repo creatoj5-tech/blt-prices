@@ -752,6 +752,24 @@ def render_category_html(category, title, entries):
     """Render a per-category HTML file (iphone-used.html, ipad.html, etc.)."""
     today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
 
+    # iphone-new.html is now a stub — all NEW prices have been merged into
+    # iphone-used.html sections. We keep this file so any cached crawler URL
+    # still resolves, but it tells the bot to look elsewhere.
+    if category == "iphone-new":
+        return (
+            "<!DOCTYPE html>\n"
+            "<html lang=\"en\"><head><meta charset=\"UTF-8\">\n"
+            "<title>BLT Trading — iPhone Buying Prices (NEW)</title></head>\n"
+            "<body>\n"
+            "<h1>NEW iPhone prices have moved</h1>\n"
+            f"<p><strong>Last Updated:</strong> {today_utc}</p>\n"
+            "<p>NEW Sealed, Open Box, and Sealed (Activated) prices are now listed inside the matching variant section in iphone-used.html — one chunk per variant contains ALL conditions (Grade A DEFAULT, NEW Sealed, Open Box, etc.). Quoting from this file directly is no longer accurate.</p>\n"
+            "<p>If a seller says \"sealed\", \"brand new\", \"still in box\", or \"never opened\" — quote the NEW Sealed line inside the matching variant section in iphone-used.html.</p>\n"
+            "<p>If a seller says \"open box\" — quote the NEW Open Box line inside the matching variant section in iphone-used.html.</p>\n"
+            "<p>Otherwise — quote the USED Grade A line, which is the DEFAULT for every variant.</p>\n"
+            "</body></html>\n"
+        )
+
     html = []
     html.append("<!DOCTYPE html>")
     html.append('<html lang="en"><head><meta charset="UTF-8">')
@@ -975,7 +993,21 @@ def main():
             all_entries.extend(entries)
             print(f"  {cat}: {len(entries)} entries")
 
-    print(f"\nTotal entries parsed: {len(all_entries)}")
+    # MERGE iphone-new entries INTO iphone-used so each variant section has
+    # all conditions (Sealed, Open Box, Grade A DEFAULT, B, C, D, DOA, SWAP HSO)
+    # in one chunk. Prevents the bot from picking NEW Sealed for naked queries
+    # because Grade A is right there as the explicit DEFAULT.
+    new_iphone_entries = category_entries.get("iphone-new", [])
+    used_iphone_entries = category_entries.get("iphone-used", [])
+    # Re-tag NEW entries so they appear inside the USED file's sections.
+    for e in new_iphone_entries:
+        e.category = "iphone-used"
+    category_entries["iphone-used"] = used_iphone_entries + new_iphone_entries
+    # Empty iphone-new so its file becomes a stub (do not index this URL anymore).
+    category_entries["iphone-new"] = []
+
+    print(f"\nMerged {len(new_iphone_entries)} NEW iPhone entries into iphone-used sections")
+    print(f"Total entries parsed: {len(all_entries)}")
 
     category_htmls = {}
 
