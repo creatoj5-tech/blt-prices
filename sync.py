@@ -1007,6 +1007,90 @@ def render_aggregate(category_htmls, all_entries):
 
 
 
+
+def render_iphone_defaults(category_entries):
+    """Render iphone-defaults.html — short Quick Reference page for retrieval.
+
+    GHL caps retrieval at ~3 chunks per query. With one big iphone-used.html,
+    multi-model queries (4+ phones) can lose chunks. This page is small enough
+    to fit in ONE chunk and lists every iPhone model's Grade A default in one
+    place — so even when GHL drops variant-detail chunks, defaults survive.
+    """
+    today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
+
+    models_order = [
+        "iPhone 17 Pro Max", "iPhone 17 Pro", "iPhone 17 AIR", "iPhone 17", "iPhone 17E",
+        "iPhone 16 Pro Max", "iPhone 16 Pro", "iPhone 16 Plus", "iPhone 16", "iPhone 16E",
+        "iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15 Plus", "iPhone 15",
+        "iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14 Plus", "iPhone 14",
+        "iPhone 13 Pro Max", "iPhone 13 Pro", "iPhone 13", "iPhone 13 Mini",
+        "iPhone SE (3rd Gen)",
+        "iPhone 12 Pro Max", "iPhone 12 Pro", "iPhone 12", "iPhone 12 Mini",
+        "iPhone 11 Pro Max", "iPhone 11 Pro", "iPhone 11",
+    ]
+
+    used = category_entries.get("iphone-used", []) or []
+
+    def storage_to_int(s):
+        if not s: return 999999
+        s = s.upper().replace(" ", "")
+        m2 = re.match(r"(\d+)(GB|TB)?", s)
+        if not m2: return 999999
+        n = int(m2.group(1))
+        return n * 1024 if (m2.group(2) == "TB") else n
+
+    # Index entries by exact canonical model name
+    by_model = {canon: [] for canon in models_order}
+    for e in used:
+        for canon in sorted(models_order, key=lambda x: -len(x)):
+            if e.model == canon:
+                by_model[canon].append(e)
+                break
+
+    def find_price(entries, lock_value, condition):
+        matches = [e for e in entries if e.lock == lock_value and e.condition == condition]
+        if not matches: return None, None
+        m3 = min(matches, key=lambda x: storage_to_int(x.storage))
+        return m3.price, m3.storage
+
+    html = ['<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">',
+            '<title>BLT Trading - iPhone Default Prices</title></head><body>',
+            '<h1>BLT iPhone Default Buying Prices</h1>',
+            f'<p>Updated: {today_utc}. Defaults = Grade A (no scratches), smallest storage. Use this for any iPhone query, especially multi-model messages where the seller names 2+ phones at once.</p>',
+            '<h2>iPhone Grade A defaults (every model in one place)</h2>',
+            '<ul>']
+
+    for canon in models_order:
+        entries = by_model.get(canon, [])
+        if not entries: continue
+        u_price, u_storage = find_price(entries, "Unlocked", "Grade A")
+        l_price, l_storage = find_price(entries, "Carrier Locked", "Grade A")
+        if u_price is None and l_price is None: continue
+        storage = u_storage or l_storage
+        bits = []
+        if u_price is not None: bits.append(f"Unlocked ${u_price}")
+        if l_price is not None: bits.append(f"Carrier-Locked ${l_price}")
+        html.append(f"<li>{canon} {storage}: {', '.join(bits)}.</li>")
+
+    html.append('</ul>')
+    html.append('<h2>iPhone NEW Sealed and Open Box defaults (Carrier-Locked, smallest storage)</h2>')
+    html.append('<ul>')
+    for canon in models_order:
+        entries = by_model.get(canon, [])
+        s_price, s_storage = find_price(entries, "Carrier Locked", "Sealed")
+        o_price, o_storage = find_price(entries, "Carrier Locked", "Open Box")
+        if s_price is None and o_price is None: continue
+        storage = s_storage or o_storage
+        bits = []
+        if s_price is not None: bits.append(f"Sealed ${s_price}")
+        if o_price is not None: bits.append(f"Open Box ${o_price}")
+        html.append(f"<li>{canon} {storage}: {', '.join(bits)}.</li>")
+    html.append('</ul>')
+    html.append('<p>For storage tiers other than the default, condition grades (B/C/D/DOA), or HSO pricing - see iphone-used.html for the full per-variant breakdown.</p>')
+    html.append('</body></html>')
+    return '\n'.join(html)
+
+
 def render_welcome_html():
     """Render welcome/policies page."""
     today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
@@ -1161,8 +1245,13 @@ def main():
     outpath.write_text(welcome_content)
     print(f"  welcome.html: {len(welcome_content) / 1024:.1f}KB")
 
+    iphone_defaults_content = render_iphone_defaults(category_entries)
+    outpath = OUTDIR / "iphone-defaults.html"
+    outpath.write_text(iphone_defaults_content)
+    print(f"  iphone-defaults.html: {len(iphone_defaults_content) / 1024:.1f}KB")
+
     print("\n" + "=" * 70)
-    print(f"SUCCESS: Generated 7 HTML files in {OUTDIR}")
+    print(f"SUCCESS: Generated 8 HTML files in {OUTDIR}")
     print("=" * 70)
 
 
