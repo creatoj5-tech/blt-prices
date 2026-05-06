@@ -816,16 +816,85 @@ def render_category_html(category, title, entries):
             if entry.model not in by_model_local:
                 model_order_local.append(entry.model)
             by_model_local[entry.model].append(entry)
+        # Build a map of model -> (best_storage, price) for the query->quote section.
+        model_defaults = {}
         for model in model_order_local:
             entries_m = sorted(by_model_local[model], key=lambda e: _storage_kb(e.storage))
             if not entries_m:
                 continue
             best = entries_m[0]
+            model_defaults[model] = (best.storage, best.price)
             line = (
                 f"<p><strong>{model}</strong>: default <strong>${best.price}</strong> "
                 f"({best.storage} SIM Unlocked Grade A).</p>"
             )
             html.append(line)
+        html.append("")
+
+        # Explicit query->quote map. GPT-4.1 follows literal "when X, reply Y"
+        # instructions much more reliably than abstract rules about defaults.
+        html.append("<h2>Query → Reply map (paste this answer verbatim when seller types the matching query)</h2>")
+        html.append("<p>Each line below is a complete pre-written answer for a short query. If the seller's message is just one of these queries (model name with no extra detail), reply with the exact sentence shown. Do NOT ask 'which exact model?' — even if the input is ambiguous like '17', use the base-model entry.</p>")
+
+        # Generate canonical query phrasings for each model
+        def query_aliases(model):
+            """Return a list of likely seller phrasings for this model."""
+            aliases = []
+            m = re.match(r"^iPhone (\d+)\s*(.*)$", model)
+            if m:
+                num = m.group(1)
+                suffix = m.group(2).strip()
+                # short numeric form first (most ambiguous, most important)
+                if suffix == "":
+                    aliases.append(num)
+                    aliases.append(f"iphone {num}")
+                    aliases.append(f"iPhone {num}")
+                elif suffix.lower() == "pro max":
+                    aliases.append(f"{num} pro max")
+                    aliases.append(f"iphone {num} pro max")
+                    aliases.append(f"iPhone {num} Pro Max")
+                elif suffix.lower() == "pro":
+                    aliases.append(f"{num} pro")
+                    aliases.append(f"iphone {num} pro")
+                    aliases.append(f"iPhone {num} Pro")
+                elif suffix.lower() == "plus":
+                    aliases.append(f"{num} plus")
+                    aliases.append(f"iphone {num} plus")
+                    aliases.append(f"iPhone {num} Plus")
+                elif suffix.upper() == "AIR":
+                    aliases.append(f"{num} air")
+                    aliases.append(f"iphone {num} air")
+                    aliases.append(f"iPhone {num} Air")
+                elif suffix.upper() == "E":
+                    aliases.append(f"{num}e")
+                    aliases.append(f"iphone {num}e")
+                    aliases.append(f"iPhone {num}E")
+                elif suffix.lower() == "mini":
+                    aliases.append(f"{num} mini")
+                    aliases.append(f"iphone {num} mini")
+                    aliases.append(f"iPhone {num} Mini")
+            elif "SE" in model:
+                aliases.append("se")
+                aliases.append("iphone se")
+                aliases.append("iPhone SE")
+            return aliases
+
+        for model in model_order_local:
+            if model not in model_defaults:
+                continue
+            storage, price = model_defaults[model]
+            aliases = query_aliases(model)
+            if not aliases:
+                continue
+            alias_str = " / ".join(f'"{a}"' for a in aliases)
+            quote = (
+                f"If it's SIM unlocked with no scratches at all, we can offer up to "
+                f"${price} for the {storage} {model}. Prices can change at any time at our discretion."
+            )
+            html.append(
+                f"<p><strong>Query {alias_str}</strong> → Reply: \"{quote}\"</p>"
+            )
+        html.append("")
         html.append("")
 
     for variant_key in variant_order:
