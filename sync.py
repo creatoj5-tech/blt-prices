@@ -1161,13 +1161,8 @@ def main():
     outpath.write_text(welcome_content)
     print(f"  welcome.html: {len(welcome_content) / 1024:.1f}KB")
 
-    prices_content = render_aggregate(category_htmls, all_entries)
-    outpath = OUTDIR / "prices.html"
-    outpath.write_text(prices_content)
-    print(f"  prices.html: {len(prices_content) / 1024:.1f}KB")
-
     print("\n" + "=" * 70)
-    print(f"SUCCESS: Generated 8 HTML files in {OUTDIR}")
+    print(f"SUCCESS: Generated 7 HTML files in {OUTDIR}")
     print("=" * 70)
 
 
