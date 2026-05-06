@@ -538,9 +538,8 @@ GRADE_ORDER = {
 
 
 def render_section(variant_key, entries):
-    """Render one <section> for a device variant. Every <li> is self-identifying
-    so any GHL retrieval chunk that contains a price line also carries the full
-    model + storage + lock + condition context."""
+    """Compact section: ~60 words. Fits 3-4 per GHL chunk so the bot can hold
+    multiple variants AND the defaults block in a single retrieval payload."""
     model, storage, lock = variant_key
 
     short_lock = _short_lock(lock)
@@ -568,33 +567,53 @@ def render_section(variant_key, entries):
     default_price = f"${default_entry.price}" if default_entry else "$?"
     default_cond = default_entry.condition if default_entry else "Grade A"
 
-    disambig = _disambig_for(model)
+    # Compact "NOT X" disambiguation: just the 2-3 closest siblings inline.
+    siblings = []
+    m = re.match(r"^iPhone (\d+)\s*(.*)$", model)
+    if m:
+        num = int(m.group(1))
+        suffix = m.group(2).strip()
+        if suffix.lower() == "pro":
+            siblings = [f"iPhone {num} Pro Max", f"iPhone {num} (base)"]
+        elif suffix.lower() == "pro max":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num-1} Pro Max"]
+        elif suffix.lower() == "plus":
+            siblings = [f"iPhone {num} (base)", f"iPhone {num} Pro"]
+        elif suffix == "":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num} Plus"]
+        elif suffix.upper() == "E":
+            siblings = [f"iPhone {num} (base)", f"iPhone {num} Pro"]
+    not_phrase = ""
+    if siblings:
+        not_phrase = " NOT " + " or ".join(siblings) + "."
 
     html = []
     html.append("<section>")
     html.append(f"<h2>{header_id}</h2>")
-    if disambig:
-        html.append(f"<p><em>This section is the {short_id} ONLY. {disambig}.</em></p>")
     html.append(
-        f"<p>Variant: <strong>{short_id}</strong>. Default buying price for this exact variant when seller does not specify condition: <strong>{default_price}</strong> ({default_cond}).</p>"
+        f"<p><strong>{short_id}</strong> default <strong>{default_price}</strong> ({default_cond}).{not_phrase}</p>"
     )
 
     html.append("<ul>")
+    short_grade_desc = {
+        "Grade A": "no scratches",
+        "Grade B": "light use",
+        "Grade B+": "light use",
+        "Grade C": "cracked / heavy scratches",
+        "Grade D": "bad LCD",
+        "DOA": "won't power",
+        "Sealed": "factory-sealed",
+        "Open Box": "opened, never used",
+        "Sealed (Activated)": "sealed, activated",
+        "SWAP HSO": "factory-fresh no box (req. 'brand new + never used + no box')",
+    }
     for entry in entries_sorted:
         cond = entry.condition
         price = f"${entry.price}"
-        desc = GRADE_DESC.get(cond, "")
-        default_marker = " (DEFAULT)" if cond == default_cond else ""
-        # Self-identifying line: chunked retrieval still knows what model this is
-        html.append(
-            f"<li><strong>{short_id} — {cond}:</strong> {price} ({desc}){default_marker}</li>"
-        )
+        desc = short_grade_desc.get(cond, "")
+        marker = " [DEFAULT]" if cond == default_cond else ""
+        html.append(f"<li>{cond}: {price} ({desc}){marker}</li>")
     html.append("</ul>")
-
-    # Footer paraphrase — extra retrieval surface area
-    html.append(
-        f"<p>Seller queries that should land on this section: \"{short_id}\", \"{model} {storage or ''} {short_lock}\". Quote {default_price} ({default_cond}) unless the seller explicitly names a different condition above. End every USED quote with: \"Prices can change at any time at our discretion.\"</p>"
-    )
     html.append("</section>")
     return "\n".join(html)
 
@@ -777,7 +796,6 @@ def render_category_html(category, title, entries):
     html.append("<body>")
     html.append(f"<h1>{title}</h1>")
     html.append(f"<p><strong>Last Updated:</strong> {today_utc}</p>")
-    html.append("<p><strong>Format note for the bot:</strong> Each section below is one device variant (model + storage + lock). All condition prices for that exact variant are inside the section. Quote the price from the matching variant's section — never mix sections.</p>")
     html.append("")
 
     by_variant = defaultdict(list)
@@ -786,10 +804,10 @@ def render_category_html(category, title, entries):
 
     variant_order = sorted(by_variant.keys())
 
-    # Per-category quick answers at the top
+    # Per-category quick answers at the top — SHORT and dense so it fits in one chunk.
     if category == "iphone-used":
-        html.append("<h2>Default Buying Prices — quote these for naked model queries (no storage / lock / condition specified)</h2>")
-        html.append("<p>Each line below is the canonical default for one iPhone model: Grade A condition, smallest storage tier listed, SIM Unlocked.</p>")
+        html.append("<h2>Naked-query defaults (model only, no storage/lock/condition)</h2>")
+        html.append("<p><strong>Rule:</strong> When seller types just a model name (e.g. \"16 pro\", \"17 pro max\", \"15\"), quote the matching line below. Smallest storage, SIM Unlocked, Grade A. End every USED quote with \"Prices can change at any time at our discretion.\"</p>")
         by_model_local = defaultdict(list)
         model_order_local = []
         for entry in entries:
@@ -803,15 +821,10 @@ def render_category_html(category, title, entries):
             if not entries_m:
                 continue
             best = entries_m[0]
-            disambig = _disambig_for(model)
             line = (
-                f"<p><strong>{model}</strong> — naked-query default <strong>${best.price}</strong> "
-                f"({best.storage} SIM Unlocked Grade A, no scratches). "
-                f"For carrier-locked, larger storage, or damaged condition see the variant sections further down."
+                f"<p><strong>{model}</strong>: default <strong>${best.price}</strong> "
+                f"({best.storage} SIM Unlocked Grade A).</p>"
             )
-            if disambig:
-                line += f" <em>{disambig}.</em>"
-            line += "</p>"
             html.append(line)
         html.append("")
 
