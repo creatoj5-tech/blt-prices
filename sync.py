@@ -851,7 +851,12 @@ def render_category_html(category, title, entries):
                     aliases.append(f"iPhone {num}")
                 elif suffix.lower() == "pro max":
                     aliases.append(f"{num} pro max")
+                    aliases.append(f"{num} promax")
+                    aliases.append(f"{num} pm")
+                    aliases.append(f"{num}pm")
+                    aliases.append(f"{num} max")
                     aliases.append(f"iphone {num} pro max")
+                    aliases.append(f"iphone {num} pm")
                     aliases.append(f"iPhone {num} Pro Max")
                 elif suffix.lower() == "pro":
                     aliases.append(f"{num} pro")
@@ -859,7 +864,10 @@ def render_category_html(category, title, entries):
                     aliases.append(f"iPhone {num} Pro")
                 elif suffix.lower() == "plus":
                     aliases.append(f"{num} plus")
+                    aliases.append(f"{num}+")
+                    aliases.append(f"{num} +")
                     aliases.append(f"iphone {num} plus")
+                    aliases.append(f"iphone {num}+")
                     aliases.append(f"iPhone {num} Plus")
                 elif suffix.upper() == "AIR":
                     aliases.append(f"{num} air")
