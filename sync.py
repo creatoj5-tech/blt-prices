@@ -804,6 +804,39 @@ def render_category_html(category, title, entries):
 
     variant_order = sorted(by_variant.keys())
 
+    # iPad-specific clarifying-question flow. Unlike iPhones (where smallest-storage
+    # SIM-Unlocked Grade A is a safe default), iPads vary too much in price across
+    # storage and WiFi/Cellular for blind quoting to be useful.
+    if category == "ipad":
+        html.append("<h2>iPad clarifying-question rule (read this BEFORE quoting any iPad)</h2>")
+        html.append("<p><strong>For iPad queries, do NOT quote a price upfront.</strong> iPad price varies $200+ by model + storage + WiFi/Cellular, so a blind quote is misleading. Instead, ask ONE combined question first, THEN quote from the matching variant section below.</p>")
+        html.append("<p><strong>Reply for any naked iPad query</strong> (e.g. \"ipad\", \"ipad pro\", \"ipad air\", \"ipad mini\", \"ipad 9th gen\") <strong>→ ask:</strong></p>")
+        html.append("<p>\"To get you a price, which iPad model and storage (e.g., iPad Pro 11\" M4 256GB or iPad Air 11\" M2 128GB), and is it WiFi or Cellular?\"</p>")
+        html.append("<p><strong>Default assumption when seller specifies model + storage but NOT lock:</strong> Cellular. Quote the Cellular price and add \"except for Verizon\" if Verizon-locked Cellular has a different price.</p>")
+        html.append("<p><strong>Default assumption when seller says \"sealed\" or \"brand new\":</strong> Cellular + \"except for Verizon\".</p>")
+        html.append("<p><strong>USED iPad with no scratches:</strong> quote the Grade A price (single price, WiFi and Cellular often priced the same — see variant section).</p>")
+        html.append("<p><strong>End every USED iPad quote with:</strong> \"Prices can change at any time at our discretion.\"</p>")
+        html.append("")
+
+        # Build a Query->Reply map for common naked iPad queries — each maps to the
+        # clarifying question, not a price.
+        ipad_query_aliases = [
+            ("ipad", "Ambiguous \"ipad\" query. Ask which model and storage."),
+            ("ipad pro", "Multiple iPad Pro generations and sizes exist."),
+            ("ipad air", "Multiple iPad Air generations exist."),
+            ("ipad mini", "Multiple iPad Mini generations exist."),
+            ("ipad 9", "iPad 9th gen exists; confirm storage and lock."),
+            ("ipad 10", "iPad 10th gen exists; confirm storage and lock."),
+            ("ipad 11", "Could mean iPad 11th gen, iPad Pro 11\", or iPad Air 11\"."),
+            ("ipad 13", "Could mean iPad Pro 13\" or iPad Air 13\"."),
+        ]
+        html.append("<h2>iPad Query → Reply map (paste this when seller types the matching query)</h2>")
+        for query, why in ipad_query_aliases:
+            reply = ('To get you a price, which iPad model and storage (e.g., iPad Pro 11" M4 256GB '
+                     'or iPad Air 11" M2 128GB), and is it WiFi or Cellular?')
+            html.append(f"<p><strong>Query \"{query}\"</strong> ({why}) → Reply: \"{reply}\"</p>")
+        html.append("")
+
     # Per-category quick answers at the top — SHORT and dense so it fits in one chunk.
     if category == "iphone-used":
         html.append("<h2>Naked-query defaults (model only, no storage/lock/condition)</h2>")
