@@ -878,6 +878,17 @@ def render_quick_answers(all_entries):
     return "\n".join(html)
 
 
+def _iphone_key(model):
+    """Module-level sort key: 17 series first, then by suffix priority."""
+    m = re.match(r"^iPhone (\d+)\s*(.*)$", model)
+    if not m:
+        return (0, 99, model)
+    num = int(m.group(1))
+    suffix = m.group(2).strip().lower()
+    suffix_order = {"pro max": 0, "pro": 1, "air": 2, "plus": 3, "": 4, "e": 5, "mini": 6}
+    return (-num, suffix_order.get(suffix, 99), model)
+
+
 def render_category_html(category, title, entries):
     """Render a per-category HTML file (iphone-used.html, ipad.html, etc.)."""
     today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
@@ -1046,6 +1057,68 @@ def render_category_html(category, title, entries):
             html.append(
                 f"<p><strong>Query {alias_str}</strong> → Reply: \"{quote}\"</p>"
             )
+        html.append("")
+
+        # Sealed / Open Box Query → Reply map. Multi-model seller queries that
+        # mix older Pro models with one "17 pro sealed" tend to lose the 17 Pro
+        # chunk in retrieval (the Pro pattern from 13/14/15/16 dominates).
+        # These literal Query→Reply lines live in the top of the file (in the
+        # first chunks) so they survive retrieval even when the per-model
+        # sections for the 17 series don't get pulled.
+        html.append("<h2>iPhone 17 series Sealed and Open Box Query → Reply map</h2>")
+        html.append("<p>If the seller types any of these queries (model + sealed/open-box keyword), reply with the exact sentence shown. Use these for the 17 series specifically — they are the high-value sealed quotes that customers ask about most.</p>")
+
+        sealed_lookup = {}  # (model, lock) -> {Sealed: price, Open Box: price}
+        for e in entries:
+            if not e.model.startswith("iPhone 17"): continue
+            key = (e.model, e.lock)
+            if e.condition not in ("Sealed", "Open Box"): continue
+            sealed_lookup.setdefault(key, {})
+            # Use smallest storage for default
+            existing = sealed_lookup[key].get(e.condition)
+            if existing is None or _storage_kb(e.storage) < _storage_kb(existing[0]):
+                sealed_lookup[key][e.condition] = (e.storage, e.price)
+
+        for model in sorted({m for m, l in sealed_lookup.keys()}, key=_iphone_key):
+            unlock = sealed_lookup.get((model, "Unlocked"), {})
+            locked = sealed_lookup.get((model, "Carrier Locked"), {})
+            short_aliases = query_aliases(model)
+            if not short_aliases: continue
+            base = short_aliases[0]  # e.g. "17 pro" or "17 pro max"
+            for cond, lock_label, lock_phrase, lock_data in [
+                ("Sealed", "AT&T-locked", "AT&T-locked and sealed in box", locked),
+                ("Sealed", "SIM unlocked", "SIM unlocked and sealed in box", unlock),
+                ("Open Box", "AT&T-locked", "AT&T-locked, open box (never used)", locked),
+                ("Open Box", "SIM unlocked", "SIM unlocked, open box (never used)", unlock),
+            ]:
+                if cond not in lock_data: continue
+                storage, price = lock_data[cond]
+                # Build alias list with carrier and condition variants
+                cond_word = "sealed" if cond == "Sealed" else "open box"
+                alias_set = []
+                for a in short_aliases[:3]:  # top 3 phrasings
+                    if "att" in lock_phrase.lower() or "AT&T" in lock_label:
+                        alias_set.extend([
+                            f"{a} {cond_word} att",
+                            f"{a} {cond_word} at&t",
+                            f"{a} att {cond_word}",
+                            f"{a} {cond_word} carrier locked",
+                            f"{a} sealed in box att" if cond == "Sealed" else f"{a} open box att",
+                        ])
+                    else:
+                        alias_set.extend([
+                            f"{a} {cond_word}",
+                            f"{a} {cond_word} unlocked",
+                            f"{a} sealed in box" if cond == "Sealed" else f"{a} open box",
+                        ])
+                alias_str = " / ".join(f'"{x}"' for x in alias_set[:6])
+                quote = (
+                    f"If it's {lock_phrase}, we can offer up to "
+                    f"${price} for the {storage} {model}."
+                )
+                html.append(
+                    f"<p><strong>Query {alias_str}</strong> → Reply: \"{quote}\"</p>"
+                )
         html.append("")
         html.append("")
 
