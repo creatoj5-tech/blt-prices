@@ -1459,8 +1459,29 @@ def main():
     outpath.write_text(iphone_defaults_content)
     print(f"  iphone-defaults.html: {len(iphone_defaults_content) / 1024:.1f}KB")
 
+
+    # Generate combined prices.html (concatenation of all per-category files)
+    print("\nGenerating combined prices.html...")
+    combined_parts = ['<!DOCTYPE html><html><head><meta charset="utf-8"><title>BLT Trading — Combined Buying Prices</title></head><body>',
+                      '<h1>BLT Trading — Complete Buying Price Reference</h1>',
+                      '<p>Combined reference auto-generated from per-category files. Synced hourly from BLT Google Sheet.</p>']
+    for fname in ["iphone-defaults.html", "iphone-used.html", "iphone-new.html", "ipad.html", "samsung.html", "watch.html", "airpods.html", "gaming.html", "welcome.html"]:
+        fpath = OUTDIR / fname
+        if fpath.exists():
+            combined_parts.append(f"<hr><!-- ===== {fname} ===== -->")
+            t = fpath.read_text()
+            t = re.sub(r"<!DOCTYPE[^>]*>", "", t, flags=re.I)
+            t = re.sub(r"</?html[^>]*>", "", t, flags=re.I)
+            t = re.sub(r"<head>.*?</head>", "", t, flags=re.I | re.S)
+            t = re.sub(r"</?body[^>]*>", "", t, flags=re.I)
+            combined_parts.append(t)
+    combined_parts.append("</body></html>")
+    combined = "\n".join(combined_parts)
+    (OUTDIR / "prices.html").write_text(combined)
+    print(f"  prices.html: {len(combined) / 1024:.1f}KB")
+
     print("\n" + "=" * 70)
-    print(f"SUCCESS: Generated 8 HTML files in {OUTDIR}")
+    print(f"SUCCESS: Generated 9 HTML files in {OUTDIR}")
     print("=" * 70)
 
 
