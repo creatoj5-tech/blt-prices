@@ -618,6 +618,117 @@ def render_section(variant_key, entries):
     return "\n".join(html)
 
 
+def render_per_model_section(model, entries):
+    """Compact per-model section: one <section> per iPhone model, all variants
+    and conditions inside. ~80-120 words. GHL chunks will then group multiple
+    complete models per chunk instead of slicing one model across chunks.
+    """
+    # Disambiguation siblings
+    siblings = []
+    m = re.match(r"^iPhone (\d+)\s*(.*)$", model)
+    if m:
+        num = int(m.group(1))
+        suffix = m.group(2).strip()
+        if suffix.lower() == "pro":
+            siblings = [f"iPhone {num} Pro Max", f"iPhone {num} (base)"]
+        elif suffix.lower() == "pro max":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num-1} Pro Max"]
+        elif suffix.lower() == "plus":
+            siblings = [f"iPhone {num} (base)", f"iPhone {num} Pro"]
+        elif suffix == "":
+            siblings = [f"iPhone {num} Pro", f"iPhone {num} Plus"]
+        elif suffix.upper() == "E":
+            siblings = [f"iPhone {num} (base)", f"iPhone {num} Pro"]
+    not_phrase = ""
+    if siblings:
+        not_phrase = " NOT " + " or ".join(siblings) + "."
+
+    # Group entries by (storage, lock)
+    by_variant = defaultdict(list)
+    for e in entries:
+        by_variant[(e.storage, e.lock)].append(e)
+
+    # Find smallest-storage Grade A defaults for unlocked and carrier-locked
+    def grade_a(lock):
+        candidates = [
+            (s, lst) for (s, l), lst in by_variant.items()
+            if l == lock and any(x.condition == "Grade A" for x in lst)
+        ]
+        if not candidates: return None
+        candidates.sort(key=lambda x: _storage_kb(x[0]))
+        s, lst = candidates[0]
+        a = next(x for x in lst if x.condition == "Grade A")
+        return (s, a.price)
+
+    unlock_default = grade_a("Unlocked")
+    locked_default = grade_a("Carrier Locked")
+
+    # Find smallest-storage Sealed for carrier-locked (NEW Sealed default)
+    sealed_default = None
+    sealed_candidates = [
+        (s, lst) for (s, l), lst in by_variant.items()
+        if l == "Carrier Locked" and any(x.condition == "Sealed" for x in lst)
+    ]
+    if sealed_candidates:
+        sealed_candidates.sort(key=lambda x: _storage_kb(x[0]))
+        s, lst = sealed_candidates[0]
+        sealed = next(x for x in lst if x.condition == "Sealed")
+        sealed_default = (s, sealed.price)
+
+    html = []
+    html.append("<section>")
+    html.append(f"<h2>{model} — All Variants and Conditions</h2>")
+
+    # DEFAULTS callout (always first, model name repeated for chunk-fragment safety)
+    default_parts = []
+    if unlock_default:
+        s, p = unlock_default
+        default_parts.append(f"SIM Unlocked Grade A {s} ${p}")
+    if locked_default:
+        s, p = locked_default
+        default_parts.append(f"Carrier-Locked Grade A {s} ${p}")
+    if sealed_default:
+        s, p = sealed_default
+        default_parts.append(f"NEW Sealed Carrier-Locked {s} ${p}")
+    if default_parts:
+        html.append(
+            f"<p><strong>{model} DEFAULTS:</strong> " + "; ".join(default_parts) + f".{not_phrase}</p>"
+        )
+
+    # Variant detail lines — one per (storage, lock) combo, all conditions inline
+    grade_order_local = {
+        "Grade A": 0, "Grade B": 1, "Grade B+": 2, "Sealed": 3, "Open Box": 4,
+        "Sealed (Activated)": 5, "Grade C": 6, "Grade D": 7, "DOA": 8, "SWAP HSO": 9,
+    }
+    short_cond = {
+        "Grade A": "A", "Grade B": "B", "Grade B+": "B+", "Grade C": "C",
+        "Grade D": "D", "DOA": "DOA", "SWAP HSO": "HSO",
+        "Sealed": "Sealed", "Open Box": "OpenBox", "Sealed (Activated)": "SealedActivated",
+    }
+
+    # Sort variants: storage ascending, then Unlocked before Carrier Locked
+    variant_keys = sorted(
+        by_variant.keys(),
+        key=lambda x: (_storage_kb(x[0]), 0 if x[1] == "Unlocked" else 1)
+    )
+
+    for (storage, lock) in variant_keys:
+        ents = sorted(by_variant[(storage, lock)], key=lambda e: grade_order_local.get(e.condition, 99))
+        bits = []
+        for e in ents:
+            label = short_cond.get(e.condition, e.condition)
+            marker = " [DEFAULT]" if e.condition == "Grade A" else ""
+            bits.append(f"{label} ${e.price}{marker}")
+        lock_label = "SIM Unlocked" if lock == "Unlocked" else "Carrier-Locked (AT&T/T-Mobile/Sprint/Verizon/US Cellular)"
+        html.append(
+            f"<p><strong>{model} {storage} {lock_label}:</strong> {', '.join(bits)}.</p>"
+        )
+
+    html.append("</section>")
+    return "\n".join(html)
+
+
+
 def _storage_kb(s):
     if not s:
         return 99999
@@ -938,10 +1049,35 @@ def render_category_html(category, title, entries):
         html.append("")
         html.append("")
 
-    for variant_key in variant_order:
-        section_html = render_section(variant_key, by_variant[variant_key])
-        html.append(section_html)
-        html.append("")
+    if category == "iphone-used":
+        # Group entries by MODEL and emit one section per model.
+        # This is critical for GHL retrieval: per-model chunks let multi-model
+        # queries pull complete pricing for each model in one chunk, instead of
+        # slicing one model across multiple chunks (which the 3-chunk ceiling
+        # cannot accommodate).
+        by_model = defaultdict(list)
+        for entry in entries:
+            by_model[entry.model].append(entry)
+
+        # Order: 17 series first (descending generation), then by suffix priority
+        def _model_key(model):
+            mm = re.match(r"^iPhone (\d+)\s*(.*)$", model)
+            if not mm:
+                return (0, 99, model)
+            n = int(mm.group(1))
+            suffix = mm.group(2).strip().lower()
+            suffix_order = {"pro max": 0, "pro": 1, "air": 2, "plus": 3, "": 4, "e": 5, "mini": 6}
+            return (-n, suffix_order.get(suffix, 99), model)
+
+        for model in sorted(by_model.keys(), key=_model_key):
+            section_html = render_per_model_section(model, by_model[model])
+            html.append(section_html)
+            html.append("")
+    else:
+        for variant_key in variant_order:
+            section_html = render_section(variant_key, by_variant[variant_key])
+            html.append(section_html)
+            html.append("")
 
     html.append("<h2>Grading Reference</h2>")
     html.append("<p><strong>Grade A:</strong> Used, no scratches, fully functional. Default for sellers who don't specify condition.</p>")
