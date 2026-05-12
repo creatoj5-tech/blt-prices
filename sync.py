@@ -1465,6 +1465,12 @@ def render_prices_json(all_entries):
     sellers whose device is sealed/unactivated AND T-Mobile-locked.
     """
     rows = []
+    # lookup dict: "model__storage__lock__condition" -> price
+    # When a (model, storage, lock, condition) exists with multiple colors,
+    # the lookup picks the LOWEST price (the conservative quote). The
+    # entries[] array still has all per-color rows for clients that want
+    # the full matrix.
+    lookup = {}
     for e in all_entries:
         rows.append({
             "category": e.category,
@@ -1477,9 +1483,18 @@ def render_prices_json(all_entries):
             "tmobile_premium": getattr(e, "tmobile_premium", None),
             "new_used": e.new_used,
         })
+        # Build the lookup key. Skip rows missing any of the required fields.
+        if not (e.model and e.storage and e.lock and e.condition):
+            continue
+        key = f"{e.model}__{e.storage}__{e.lock}__{e.condition}"
+        existing = lookup.get(key)
+        if existing is None or e.price < existing:
+            lookup[key] = e.price
     payload = {
         "version": datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z",
         "total": len(rows),
+        "lookup_total": len(lookup),
+        "lookup": lookup,
         "entries": rows,
     }
     return json.dumps(payload, indent=2, ensure_ascii=False)
