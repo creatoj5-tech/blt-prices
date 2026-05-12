@@ -24,8 +24,18 @@ OUTDIR.mkdir(parents=True, exist_ok=True)
 # ===== Data structures =====
 
 class PriceEntry:
-    """One price entry: device variant + condition + price."""
-    def __init__(self, category, model, storage, lock, condition, price, new_used="USED"):
+    """One price entry: device variant + condition + price.
+
+    Optional fields:
+      color           — color name (e.g. 'Deep Blue') when the sheet provides
+                        per-color prices. None for sections without color split.
+      tmobile_premium — int $ added on top of `price` when the device is
+                        T-Mobile-locked AND sealed/unactivated. Only set on
+                        Sealed entries for sections that have a corresponding
+                        'Sealed/Non Active T-Mobile +$X' row.
+    """
+    def __init__(self, category, model, storage, lock, condition, price,
+                 new_used="USED", color=None, tmobile_premium=None):
         self.category = category
         self.model = model
         self.storage = storage
@@ -33,6 +43,8 @@ class PriceEntry:
         self.condition = condition
         self.price = price
         self.new_used = new_used
+        self.color = color
+        self.tmobile_premium = tmobile_premium
         self.variant_key = (self.model, self.storage, self.lock)
 
     def identifier(self):
@@ -113,87 +125,212 @@ def parse_iphone_used(ws):
     return entries
 
 
+def _parse_money(v):
+    """Parse a money cell (e.g. '$810', 810, '-$30', '-30'). Returns int or None."""
+    if v is None or v == "-" or v == "":
+        return None
+    s = str(v).replace("$", "").replace(",", "").strip()
+    if not s:
+        return None
+    try:
+        return int(float(s))
+    except (ValueError, TypeError):
+        return None
+
+
 def parse_iphone_new(ws):
-    """Parse 'New Iphone' tab (NEW iPhones)."""
+    """Parse 'New Iphone' tab (NEW iPhones).
+
+    Two row layouts coexist in this sheet, and BOTH contain a spacer column
+    between data columns (so consecutive data columns aren't B/C/D/E — they're
+    B/C/E/F/G with D as a blank spacer; same idea for the Air section).
+
+    1) Per-color section (used for 17 Pro Max, 17 Pro, 17 base, 17E, etc.):
+         A: 'iPhone <Model> <Storage> <Unlocked|Locked>'
+         B: Deep Blue sealed price (absolute $)
+         C: Cosmic Orange sealed price
+         D: (spacer, blank)
+         E: Silver sealed price
+         F: Open delta (typically negative $, applied per color)
+         G: Open Activated delta (typically negative $)
+
+       => emits one Sealed/Open Box/Sealed (Activated) entry PER color.
+
+    2) Air-style section (used for 17 Air, 17 E):
+         A: 'Unlocked' or 'Carrier Locked'   (lock state only)
+         B: storage ('256GB' / '512GB' / '1TB')
+         C: Sealed (absolute $, single price, no per-color split)
+         D: (spacer)
+         E: Open (absolute $)
+         F: (spacer)
+         G: Open Activated (absolute $)
+
+       => emits Sealed/Open Box/Sealed (Activated) entries WITHOUT a color.
+       The current model name is tracked from a preceding 'iPhone <N> Air' or
+       'iPhone <N> E' header row in column A.
+
+    Between sections there are highlight rows like:
+       'Sealed/Non Active T-Mobile +$150'
+       'Sealed/Non Active T-Mobile +$50'
+    These attach a tmobile_premium to every Sealed entry in the section
+    immediately above the row.
+    """
     entries = []
     max_row = ws.max_row
 
+    # Sheet has a blank spacer column D between Cosmic Orange and Silver.
+    COLOR_COLS = [("B", "Deep Blue"), ("C", "Cosmic Orange"), ("E", "Silver")]
+
+    # Entries are kept in `section_entries` (un-flushed) for the duration of a
+    # single MODEL (e.g. iPhone 17 Pro Max — across both Unlocked and Locked
+    # sub-blocks). When we encounter a 'Sealed/Non Active T-Mobile +$X' row,
+    # the premium is applied to every Sealed entry still in section_entries
+    # (so the premium covers BOTH lock states of the model). We flush only
+    # when we detect a NEW model.
+    section_entries = []
+    current_model = None       # base model string, e.g. 'iPhone 17 Pro Max'
+    current_air_model = None   # set for Air/E-style sections that use the
+                                # Storage|Sealed|Open|Activated layout
+    current_tmo_premium = None  # int $ that applies to any Sealed entry for the
+                                # current model (both retroactively + prospectively)
+
+    def _flush():
+        nonlocal section_entries
+        entries.extend(section_entries)
+        section_entries = []
+
+    def _switch_model(new_model):
+        """Flush current section if the model changed; reset T-Mobile state."""
+        nonlocal current_model, current_tmo_premium
+        if current_model != new_model:
+            _flush()
+            current_model = new_model
+            current_tmo_premium = None
+
     for row_idx in range(2, max_row + 1):
         cell_a = ws[f"A{row_idx}"].value
-        if not cell_a or not isinstance(cell_a, str):
+        if cell_a is None:
             continue
-
+        if not isinstance(cell_a, str):
+            cell_a = str(cell_a)
         cell_a = cell_a.strip()
-        if not cell_a.startswith("iPhone "):
+        if not cell_a:
             continue
 
-        m = re.match(r"iPhone\s+(.+?)\s+(\d+(?:GB|TB))\s+(Unlocked|Locked)$", cell_a)
-        if not m:
+        # --- T-Mobile premium row: applies to the current model's Sealed entries ---
+        tmo_m = re.match(
+            r"Sealed\s*/?\s*Non[\s-]*Active\s*T-?Mobile\s*\+?\$?(\d+)",
+            cell_a, re.IGNORECASE,
+        )
+        if tmo_m:
+            premium = int(tmo_m.group(1))
+            current_tmo_premium = premium
+            for e in section_entries:
+                if e.condition == "Sealed":
+                    e.tmobile_premium = premium
             continue
 
-        model = f"iPhone {m.group(1)}"
-        storage = m.group(2)
-        lock_str = m.group(3)
-        lock = "Carrier Locked" if lock_str == "Locked" else "Unlocked"
+        # --- Per-color section header row: 'iPhone <Model> <Storage> Locked|Unlocked' ---
+        m = re.match(
+            r"iPhone\s+(.+?)\s+(\d+(?:GB|TB))\s+(Unlocked|Locked)$",
+            cell_a,
+        )
+        if m:
+            model = f"iPhone {m.group(1)}"
+            storage = m.group(2)
+            lock = "Carrier Locked" if m.group(3) == "Locked" else "Unlocked"
 
-        sealed_cells = [
-            ws[f"B{row_idx}"].value,
-            ws[f"C{row_idx}"].value,
-            ws[f"D{row_idx}"].value,
-        ]
-        open_cell = ws[f"E{row_idx}"].value
-        activated_cell = ws[f"F{row_idx}"].value
+            _switch_model(model)
+            current_air_model = None  # leaving any Air section
 
-        sealed_price = None
-        for cell in sealed_cells:
-            if cell and cell != "-":
-                try:
-                    sealed_price = int(float(str(cell).replace(",", "")))
-                    break
-                except (ValueError, TypeError):
-                    pass
+            open_delta = _parse_money(ws[f"F{row_idx}"].value)
+            activated_delta = _parse_money(ws[f"G{row_idx}"].value)
 
-        if sealed_price:
-            entries.append(PriceEntry(
-                category="iphone-new",
-                model=model,
-                storage=storage,
-                lock=lock,
-                condition="Sealed",
-                price=sealed_price,
-                new_used="NEW"
+            for col_letter, color_name in COLOR_COLS:
+                sealed_price = _parse_money(ws[f"{col_letter}{row_idx}"].value)
+                if sealed_price is None:
+                    continue
+
+                section_entries.append(PriceEntry(
+                    category="iphone-new", model=model, storage=storage, lock=lock,
+                    condition="Sealed", price=sealed_price,
+                    new_used="NEW", color=color_name,
+                    tmobile_premium=current_tmo_premium,
+                ))
+                if open_delta is not None:
+                    section_entries.append(PriceEntry(
+                        category="iphone-new", model=model, storage=storage, lock=lock,
+                        condition="Open Box", price=sealed_price + open_delta,
+                        new_used="NEW", color=color_name,
+                    ))
+                if activated_delta is not None:
+                    section_entries.append(PriceEntry(
+                        category="iphone-new", model=model, storage=storage, lock=lock,
+                        condition="Sealed (Activated)",
+                        price=sealed_price + activated_delta,
+                        new_used="NEW", color=color_name,
+                    ))
+            continue
+
+        # --- Air-style section header: 'iPhone <N> Air' or 'iPhone <N> E' ---
+        air_h = re.match(r"^iPhone\s+\d+\s*(Air|E)\s*$", cell_a, re.IGNORECASE)
+        if air_h:
+            new_model = re.sub(r"\s+", " ", cell_a).strip()
+            _switch_model(new_model)
+            current_air_model = new_model
+            continue
+
+        # --- Air section row: A='Unlocked' or 'Carrier Locked' ---
+        # Air layout: B=storage, C=Sealed, D=spacer, E=Open, F=spacer, G=Activated
+        if cell_a in ("Unlocked", "Carrier Locked") and current_air_model:
+            lock = "Unlocked" if cell_a == "Unlocked" else "Carrier Locked"
+            storage_v = ws[f"B{row_idx}"].value
+            sealed_price = _parse_money(ws[f"C{row_idx}"].value)
+            open_price = _parse_money(ws[f"E{row_idx}"].value)
+            activated_price = _parse_money(ws[f"G{row_idx}"].value)
+            if not storage_v or sealed_price is None:
+                continue
+            storage = str(storage_v).strip()
+
+            section_entries.append(PriceEntry(
+                category="iphone-new", model=current_air_model, storage=storage, lock=lock,
+                condition="Sealed", price=sealed_price,
+                new_used="NEW", color=None,
+                tmobile_premium=current_tmo_premium,
             ))
-
-        if open_cell and open_cell != "-":
-            try:
-                open_price = int(float(str(open_cell).replace(",", "")))
-                entries.append(PriceEntry(
-                    category="iphone-new",
-                    model=model,
-                    storage=storage,
-                    lock=lock,
-                    condition="Open Box",
-                    price=open_price,
-                    new_used="NEW"
+            if open_price is not None:
+                section_entries.append(PriceEntry(
+                    category="iphone-new", model=current_air_model, storage=storage, lock=lock,
+                    condition="Open Box", price=open_price,
+                    new_used="NEW", color=None,
                 ))
-            except (ValueError, TypeError):
-                pass
-
-        if activated_cell and activated_cell != "-":
-            try:
-                activated_price = int(float(str(activated_cell).replace(",", "")))
-                entries.append(PriceEntry(
-                    category="iphone-new",
-                    model=model,
-                    storage=storage,
-                    lock=lock,
-                    condition="Sealed (Activated)",
-                    price=activated_price,
-                    new_used="NEW"
+            if activated_price is not None:
+                section_entries.append(PriceEntry(
+                    category="iphone-new", model=current_air_model, storage=storage, lock=lock,
+                    condition="Sealed (Activated)", price=activated_price,
+                    new_used="NEW", color=None,
                 ))
-            except (ValueError, TypeError):
-                pass
+            continue
 
+        # --- Pro / Pro Max model banner row (e.g. 'iPhone 17 Pro Max') ---
+        # These don't carry storage or lock; they just announce that
+        # subsequent rows belong to the named model. Switch the section
+        # so T-Mobile premium rows are scoped correctly.
+        banner_m = re.match(
+            r"^iPhone\s+\d+\s*(Pro Max|Pro|Plus)?\s*$",
+            cell_a, re.IGNORECASE,
+        )
+        if banner_m:
+            suffix = (banner_m.group(1) or "").strip()
+            num_m = re.search(r"\d+", cell_a)
+            if num_m:
+                num = num_m.group(0)
+                new_model = f"iPhone {num}" + (f" {suffix}" if suffix else "")
+                _switch_model(new_model)
+                current_air_model = None
+            continue
+
+    _flush()
     return entries
 
 
@@ -607,12 +744,42 @@ def render_section(variant_key, entries):
         "Sealed (Activated)": "sealed, activated",
         "SWAP HSO": "factory-fresh no box (req. 'brand new + never used + no box')",
     }
+    # Group per-color entries (Sealed / Open Box / Sealed (Activated)) into a
+    # single line per condition so the bot sees the full color matrix instead
+    # of N duplicate-looking entries.
+    color_grouped = {}  # condition -> list of (color, price)
+    tmobile_premium_by_cond = {}  # condition -> int (only for "Sealed")
+    flat_entries = []
     for entry in entries_sorted:
+        if getattr(entry, "color", None):
+            color_grouped.setdefault(entry.condition, []).append((entry.color, entry.price))
+            if entry.condition == "Sealed" and getattr(entry, "tmobile_premium", None):
+                tmobile_premium_by_cond["Sealed"] = entry.tmobile_premium
+        else:
+            flat_entries.append(entry)
+
+    # Emit flat (non-color) entries first
+    for entry in flat_entries:
         cond = entry.condition
         price = f"${entry.price}"
         desc = short_grade_desc.get(cond, "")
         marker = " [DEFAULT]" if cond == default_cond else ""
-        html.append(f"<li>{cond}: {price} ({desc}){marker}</li>")
+        tmo = ""
+        if cond == "Sealed" and getattr(entry, "tmobile_premium", None):
+            tmo = f" — T-Mobile sealed/unactivated: +${entry.tmobile_premium} (i.e. ${entry.price + entry.tmobile_premium})"
+        html.append(f"<li>{cond}: {price} ({desc}){marker}{tmo}</li>")
+
+    # Emit color-grouped entries: one <li> per condition with all colors inline
+    for cond, color_prices in color_grouped.items():
+        desc = short_grade_desc.get(cond, "")
+        marker = " [DEFAULT]" if cond == default_cond else ""
+        color_str = " | ".join(f"{c} ${p}" for c, p in color_prices)
+        tmo = ""
+        if cond == "Sealed" and "Sealed" in tmobile_premium_by_cond:
+            prem = tmobile_premium_by_cond["Sealed"]
+            tmo_prices = " | ".join(f"{c} ${p + prem}" for c, p in color_prices)
+            tmo = f" — T-Mobile sealed/unactivated (add +${prem}): {tmo_prices}"
+        html.append(f"<li>{cond} by color: {color_str} ({desc}){marker}{tmo}</li>")
     html.append("</ul>")
     html.append("</section>")
     return "\n".join(html)
@@ -714,11 +881,38 @@ def render_per_model_section(model, entries):
 
     for (storage, lock) in variant_keys:
         ents = sorted(by_variant[(storage, lock)], key=lambda e: grade_order_local.get(e.condition, 99))
+        # Separate color-bearing entries from flat entries so per-color
+        # Sealed/Open Box/Sealed (Activated) get one combined bit per condition.
+        flat = [e for e in ents if not getattr(e, "color", None)]
+        colored = [e for e in ents if getattr(e, "color", None)]
+        colored_by_cond = defaultdict(list)
+        tmo_premium_for = {}  # condition -> int premium
+        for e in colored:
+            colored_by_cond[e.condition].append((e.color, e.price))
+            if e.condition == "Sealed" and getattr(e, "tmobile_premium", None):
+                tmo_premium_for["Sealed"] = e.tmobile_premium
+
         bits = []
-        for e in ents:
+        for e in flat:
             label = short_cond.get(e.condition, e.condition)
             marker = " [DEFAULT]" if e.condition == "Grade A" else ""
-            bits.append(f"{label} ${e.price}{marker}")
+            tmo = ""
+            if e.condition == "Sealed" and getattr(e, "tmobile_premium", None):
+                tmo = f" [T-Mobile sealed/unactivated +${e.tmobile_premium} = ${e.price + e.tmobile_premium}]"
+            bits.append(f"{label} ${e.price}{marker}{tmo}")
+
+        # Emit colored conditions: one bit per (condition, color), preserving
+        # the price-per-color information that the sheet actually carries.
+        for cond in sorted(colored_by_cond.keys(), key=lambda c: grade_order_local.get(c, 99)):
+            label = short_cond.get(cond, cond)
+            color_list = colored_by_cond[cond]
+            color_str = " / ".join(f"{color} ${price}" for color, price in color_list)
+            bits.append(f"{label} ({color_str})")
+            if cond == "Sealed" and "Sealed" in tmo_premium_for:
+                prem = tmo_premium_for["Sealed"]
+                tmo_str = " / ".join(f"{color} ${price + prem}" for color, price in color_list)
+                bits.append(f"T-Mobile sealed/unactivated +${prem} ({tmo_str})")
+
         lock_label = "SIM Unlocked" if lock == "Unlocked" else "Carrier-Locked (AT&T/T-Mobile/Sprint/Verizon/US Cellular)"
         html.append(
             f"<p><strong>{model} {storage} {lock_label}:</strong> {', '.join(bits)}.</p>"
