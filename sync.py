@@ -9,6 +9,7 @@ variant (model + storage + lock), with all grade prices inside.
 import os
 import re
 import sys
+import json
 import datetime
 from pathlib import Path
 from collections import defaultdict
@@ -1444,6 +1445,46 @@ def render_iphone_defaults(category_entries):
     return '\n'.join(html)
 
 
+def render_prices_json(all_entries):
+    """Emit a structured JSON file for deterministic price lookup.
+
+    Shape:
+      {
+        "version": "<iso8601>",
+        "entries": [
+          {"category": "iphone-used", "model": "iPhone 17 Pro Max",
+           "storage": "256GB", "lock": "Carrier Locked", "condition": "Sealed",
+           "color": "Deep Blue", "price": 810, "tmobile_premium": 150},
+          ...
+        ]
+      }
+
+    Consumers (Make.com): filter by exact match on (model, storage, lock,
+    condition) — plus color if provided — to retrieve the price. The
+    `tmobile_premium` field, when present, is added on top of `price` for
+    sellers whose device is sealed/unactivated AND T-Mobile-locked.
+    """
+    rows = []
+    for e in all_entries:
+        rows.append({
+            "category": e.category,
+            "model": e.model,
+            "storage": e.storage or "",
+            "lock": e.lock or "",
+            "condition": e.condition or "",
+            "color": getattr(e, "color", None),
+            "price": e.price,
+            "tmobile_premium": getattr(e, "tmobile_premium", None),
+            "new_used": e.new_used,
+        })
+    payload = {
+        "version": datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z",
+        "total": len(rows),
+        "entries": rows,
+    }
+    return json.dumps(payload, indent=2, ensure_ascii=False)
+
+
 def render_welcome_html():
     """Render welcome/policies page."""
     today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
@@ -1602,6 +1643,14 @@ def main():
     outpath = OUTDIR / "iphone-defaults.html"
     outpath.write_text(iphone_defaults_content)
     print(f"  iphone-defaults.html: {len(iphone_defaults_content) / 1024:.1f}KB")
+
+    # Stage-2 deterministic lookup table: structured JSON for Make.com to
+    # filter on (model, storage, lock, condition) without ever sending the
+    # price data to the LLM.
+    prices_json_content = render_prices_json(all_entries)
+    outpath = OUTDIR / "prices.json"
+    outpath.write_text(prices_json_content)
+    print(f"  prices.json: {len(prices_json_content) / 1024:.1f}KB ({len(all_entries)} entries)")
 
 
     # Generate combined prices.html (concatenation of all per-category files)
