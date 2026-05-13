@@ -1846,6 +1846,15 @@ def main():
     combined_parts.append(lookup_block)
     print(f"  lookup block: {lookup_block.count(chr(10)) - 1} KEY rows, {len(lookup_block) / 1024:.1f}KB")
 
+    # ALSO emit a dedicated plain-text file containing only the KEY rows
+    # (no <pre> wrapper, no HTML). The Messenger bot's Make.com pipeline
+    # fetches this file directly via Module 2, so the system prompt can
+    # inject the lookup with {{2.data}} verbatim — no substring extraction
+    # step needed in Make.com.
+    lookup_text = lookup_block.replace('<pre id="lookup">\n', '').replace('\n</pre>', '')
+    (OUTDIR / "lookup.txt").write_text(lookup_text)
+    print(f"  lookup.txt: {lookup_text.count(chr(10)) + 1} KEY rows, {len(lookup_text) / 1024:.1f}KB")
+
     for fname in ["iphone-defaults.html", "iphone-used.html", "iphone-new.html", "ipad.html", "samsung.html", "watch.html", "airpods.html", "gaming.html", "welcome.html"]:
         fpath = OUTDIR / fname
         if fpath.exists():
