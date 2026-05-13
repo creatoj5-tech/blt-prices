@@ -1500,6 +1500,169 @@ def render_prices_json(all_entries):
     return json.dumps(payload, indent=2, ensure_ascii=False)
 
 
+# ===================================================================
+# DETERMINISTIC LOOKUP BLOCK
+# ===================================================================
+# Emits a <pre id="lookup"> block at the very top of prices.html
+# containing one canonical line per priced variant in the format:
+#   KEY=<model-slug>|<storage>|<lock>|<condition>[|<modifier>] → $<price>
+#
+# This block is the ONLY source of truth the Messenger bot is supposed
+# to read. The prose Quick Reference + HTML tables stay below it for
+# human readers and the GHL crawler's vector index.
+#
+# Pre-composed situational variants (so the LLM never composes math):
+#   - iPhone 17 series Sealed: one row per color price (modifier = color)
+#   - iPhone 17 series Sealed-Unactivated T-Mobile: one row per
+#     base color, lock=tmobile, condition=sealed-unactivated,
+#     price = sealed price + tmobile_premium
+#   - Grade C rows are emitted whenever the source sheet has them
+#     (any-crack-or-scratch fallback — bot prompt also has hardcoded
+#     template C for catastrophic damage)
+# ===================================================================
+
+def _lookup_model_slug(model: str) -> str:
+    """Normalize a model name to a lowercase hyphenated slug.
+
+    Examples:
+      iPhone 17 Pro Max  -> iphone-17-pro-max
+      iPhone 17 AIR      -> iphone-17-air
+      iPhone 17 E        -> iphone-17e   (collapse with iPhone 17E)
+      Galaxy S26Ultra    -> galaxy-s26-ultra
+      S20+               -> galaxy-s20-plus
+      S10E               -> galaxy-s10e  (preserve E suffix)
+      iPad Pro           -> ipad-pro
+    """
+    if not model:
+        return ""
+    s = model.strip()
+    # Collapse "iPhone NN E" (with space) into "iPhone NNE" to match
+    # the no-space variant that also appears in the sheet.
+    s = re.sub(r'(iPhone\s+\d+)\s+E\b', r'\1E', s)
+    # Bare Samsung models in the sheet are missing the "Galaxy" prefix
+    # (e.g., "S10", "Note 20 Ultra", "Z Flip 3"). Add it.
+    if re.match(r'^(S\d|Note\s+\d|Z\s+(Fold|Flip)\s+\d)\b', s, re.I):
+        s = "Galaxy " + s
+    # Handle "+" suffix (S20+ -> S20 plus) before we strip non-alnum
+    s = s.replace('+', ' plus')
+    # Insert missing space before a tier word stuck to a digit
+    # ("S26Ultra" -> "S26 Ultra", but DON'T split "S10E" because E isn't a tier word)
+    s = re.sub(r'(\d)(Ultra|Pro|Plus|Max|Mini)', r'\1 \2', s)
+    s = s.lower().replace('(', '').replace(')', '')
+    s = re.sub(r'[^a-z0-9]+', '-', s)
+    return s.strip('-')
+
+
+def _lookup_storage_slug(storage: str) -> str:
+    if not storage:
+        return ""
+    return storage.strip().lower().replace(' ', '')
+
+
+def _lookup_lock_slug(lock: str) -> str:
+    if not lock:
+        return ""
+    table = {
+        "Unlocked": "unlocked",
+        "Carrier Locked": "carrier-locked",
+        "WiFi": "wifi",
+        "Cellular": "cellular",
+        "Verizon": "verizon",
+    }
+    if lock in table:
+        return table[lock]
+    return re.sub(r'[^a-z0-9]+', '-', lock.lower()).strip('-')
+
+
+def _lookup_condition_slug(cond: str) -> str:
+    if not cond:
+        return ""
+    table = {
+        "Grade A": "grade-a",
+        "Grade B": "grade-b",
+        "Grade B+": "grade-b-plus",
+        "Grade C": "grade-c",
+        "Grade D": "grade-d",
+        "DOA": "doa",
+        "Sealed": "sealed",
+        "Sealed (Activated)": "sealed-activated",
+        "Open Box": "open-box",
+        "SWAP HSO": "hso",
+    }
+    if cond in table:
+        return table[cond]
+    return re.sub(r'[^a-z0-9]+', '-', cond.lower()).strip('-')
+
+
+def _lookup_color_slug(color: str) -> str:
+    if not color:
+        return ""
+    return re.sub(r'[^a-z0-9]+', '-', color.lower()).strip('-')
+
+
+def render_lookup_block(all_entries):
+    """Build the <pre id="lookup"> deterministic lookup block.
+
+    One canonical line per priced variant. Pre-composes the
+    sealed-unactivated-T-Mobile situational rows so the LLM never
+    has to do math on its own.
+
+    Dedup rule: if multiple entries collapse to the same KEY (e.g.,
+    "iPhone 17 AIR" + "iPhone 17 Air" duplicates in the sheet), keep
+    the LOWEST price — that's the safe quote for the bot.
+    """
+    rows = {}  # key -> price (lowest wins on collision)
+
+    def _put(key, price):
+        if key in rows:
+            if price < rows[key]:
+                rows[key] = price
+        else:
+            rows[key] = price
+
+    for e in all_entries:
+        m = _lookup_model_slug(e.model)
+        s = _lookup_storage_slug(e.storage)
+        l = _lookup_lock_slug(e.lock)
+        c = _lookup_condition_slug(e.condition)
+        # Skip rows that don't have all four primary fields. Watches and
+        # gaming consoles usually fall out here (no storage, no lock) —
+        # they stay in the prose tables below for human readers; the
+        # Messenger bot template E escalates them by name.
+        if not (m and s and l and c):
+            continue
+        color = getattr(e, "color", None)
+        key_parts = [m, s, l, c]
+        if color:
+            key_parts.append(_lookup_color_slug(color))
+        _put("|".join(key_parts), e.price)
+
+        # Pre-compose the sealed-unactivated T-Mobile variant. The sheet
+        # stores this as a +premium on top of a carrier-locked Sealed row
+        # (sealed unactivated T-Mobile devices ARE carrier-locked).
+        tmo_premium = getattr(e, "tmobile_premium", None)
+        if e.condition == "Sealed" and tmo_premium and e.lock == "Carrier Locked":
+            tmo_parts = [m, s, "tmobile", "sealed-unactivated"]
+            if color:
+                tmo_parts.append(_lookup_color_slug(color))
+            _put("|".join(tmo_parts), e.price + tmo_premium)
+
+        # Also emit a no-color "base" Sealed row using the LOWEST color
+        # price, so when a seller says "iPhone 17 Pro Max sealed" without
+        # naming a color the bot can match a single canonical row instead
+        # of scanning all three color rows for the min. Template S17.
+        if e.condition == "Sealed" and color:
+            base_parts = [m, s, l, c]
+            _put("|".join(base_parts), e.price)
+        if e.condition == "Sealed" and tmo_premium and e.lock == "Carrier Locked" and color:
+            base_tmo_parts = [m, s, "tmobile", "sealed-unactivated"]
+            _put("|".join(base_tmo_parts), e.price + tmo_premium)
+
+    # Sort for stable diffs across runs.
+    lines = [f"KEY={key} → ${rows[key]}" for key in sorted(rows.keys())]
+    return '<pre id="lookup">\n' + '\n'.join(lines) + '\n</pre>'
+
+
 def render_welcome_html():
     """Render welcome/policies page."""
     today_utc = datetime.datetime.now(datetime.timezone.utc).isoformat() + "Z"
@@ -1673,6 +1836,16 @@ def main():
     combined_parts = ['<!DOCTYPE html><html><head><meta charset="utf-8"><title>BLT Trading — Combined Buying Prices</title></head><body>',
                       '<h1>BLT Trading — Complete Buying Price Reference</h1>',
                       '<p>Combined reference auto-generated from per-category files. Synced hourly from BLT Google Sheet.</p>']
+
+    # Deterministic lookup block goes at the TOP, before any human-prose
+    # sections. The Messenger bot reads this and ONLY this — every KEY
+    # line is a complete pre-priced variant so the LLM never composes
+    # arithmetic. Human-readable prose tables stay below for the GHL
+    # crawler.
+    lookup_block = render_lookup_block(all_entries)
+    combined_parts.append(lookup_block)
+    print(f"  lookup block: {lookup_block.count(chr(10)) - 1} KEY rows, {len(lookup_block) / 1024:.1f}KB")
+
     for fname in ["iphone-defaults.html", "iphone-used.html", "iphone-new.html", "ipad.html", "samsung.html", "watch.html", "airpods.html", "gaming.html", "welcome.html"]:
         fpath = OUTDIR / fname
         if fpath.exists():
