@@ -1,5 +1,5 @@
 {
-  "version": "2026-05-13T13:30:22.828820+00:00Z",
+  "version": "2026-05-13T17:23:34.992408+00:00Z",
   "total": 2586,
   "lookup_total": 1398,
   "lookup": {
@@ -513,7 +513,7 @@
     "iPhone 14 Pro Max__1TB__Unlocked__DOA": 50,
     "iPhone 14 Pro Max__128GB__Carrier Locked__SWAP HSO": 350,
     "iPhone 14 Pro Max__128GB__Carrier Locked__Grade A": 280,
-    "iPhone 14 Pro Max__128GB__Carrier Locked__Grade B": 280,
+    "iPhone 14 Pro Max__128GB__Carrier Locked__Grade B": 250,
     "iPhone 14 Pro Max__128GB__Carrier Locked__Grade C": 190,
     "iPhone 14 Pro Max__128GB__Carrier Locked__Grade D": 140,
     "iPhone 14 Pro Max__128GB__Carrier Locked__DOA": 80,
@@ -7020,7 +7020,7 @@
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
-      "price": 280,
+      "price": 250,
       "tmobile_premium": null,
       "new_used": "USED"
     },
