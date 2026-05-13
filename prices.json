@@ -1,5 +1,5 @@
 {
-  "version": "2026-05-12T21:59:00.277804+00:00Z",
+  "version": "2026-05-13T08:23:31.413364+00:00Z",
   "total": 2586,
   "lookup_total": 1398,
   "lookup": {
@@ -409,7 +409,7 @@
     "iPhone 15 Pro__1TB__Unlocked__Grade D": 240,
     "iPhone 15 Pro__128GB__Carrier Locked__SWAP HSO": 310,
     "iPhone 15 Pro__128GB__Carrier Locked__Grade A": 280,
-    "iPhone 15 Pro__128GB__Carrier Locked__Grade B": 280,
+    "iPhone 15 Pro__128GB__Carrier Locked__Grade B": 250,
     "iPhone 15 Pro__128GB__Carrier Locked__Grade C": 220,
     "iPhone 15 Pro__128GB__Carrier Locked__Grade D": 140,
     "iPhone 15 Pro__256GB__Carrier Locked__SWAP HSO": 360,
@@ -1090,16 +1090,16 @@
     "iPhone 11__256GB__Carrier Locked__Grade C": 30,
     "iPhone 11__256GB__Carrier Locked__Grade D": 0,
     "iPhone 11__256GB__Carrier Locked__DOA": 5,
-    "iPhone 17 Pro Max__256GB__Unlocked__Sealed": 1150,
-    "iPhone 17 Pro Max__512GB__Unlocked__Sealed": 1280,
-    "iPhone 17 Pro Max__1TB__Unlocked__Sealed": 1440,
-    "iPhone 17 Pro Max__2TB__Unlocked__Sealed": 1590,
+    "iPhone 17 Pro Max__256GB__Unlocked__Sealed": 1180,
+    "iPhone 17 Pro Max__512GB__Unlocked__Sealed": 1320,
+    "iPhone 17 Pro Max__1TB__Unlocked__Sealed": 1450,
+    "iPhone 17 Pro Max__2TB__Unlocked__Sealed": 1620,
     "iPhone 17 Pro Max__256GB__Carrier Locked__Sealed": 810,
     "iPhone 17 Pro Max__512GB__Carrier Locked__Sealed": 920,
     "iPhone 17 Pro Max__1TB__Carrier Locked__Sealed": 1040,
-    "iPhone 17 Pro__256GB__Unlocked__Sealed": 1030,
-    "iPhone 17 Pro__512GB__Unlocked__Sealed": 1160,
-    "iPhone 17 Pro__1TB__Unlocked__Sealed": 1280,
+    "iPhone 17 Pro__256GB__Unlocked__Sealed": 1060,
+    "iPhone 17 Pro__512GB__Unlocked__Sealed": 1200,
+    "iPhone 17 Pro__1TB__Unlocked__Sealed": 1340,
     "iPhone 17 Pro__256GB__Carrier Locked__Sealed": 710,
     "iPhone 17 Pro__512GB__Carrier Locked__Sealed": 830,
     "iPhone 17 Pro__1TB__Carrier Locked__Sealed": 960,
@@ -5876,7 +5876,7 @@
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
-      "price": 280,
+      "price": 250,
       "tmobile_premium": null,
       "new_used": "USED"
     },
@@ -13367,7 +13367,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1160,
+      "price": 1180,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13378,7 +13378,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 1150,
+      "price": 1190,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13389,7 +13389,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Silver",
-      "price": 1200,
+      "price": 1220,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13400,28 +13400,6 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1290,
-      "tmobile_premium": 150,
-      "new_used": "NEW"
-    },
-    {
-      "category": "iphone-used",
-      "model": "iPhone 17 Pro Max",
-      "storage": "512GB",
-      "lock": "Unlocked",
-      "condition": "Sealed",
-      "color": "Cosmic Orange",
-      "price": 1280,
-      "tmobile_premium": 150,
-      "new_used": "NEW"
-    },
-    {
-      "category": "iphone-used",
-      "model": "iPhone 17 Pro Max",
-      "storage": "512GB",
-      "lock": "Unlocked",
-      "condition": "Sealed",
-      "color": "Silver",
       "price": 1350,
       "tmobile_premium": 150,
       "new_used": "NEW"
@@ -13429,11 +13407,33 @@
     {
       "category": "iphone-used",
       "model": "iPhone 17 Pro Max",
+      "storage": "512GB",
+      "lock": "Unlocked",
+      "condition": "Sealed",
+      "color": "Cosmic Orange",
+      "price": 1320,
+      "tmobile_premium": 150,
+      "new_used": "NEW"
+    },
+    {
+      "category": "iphone-used",
+      "model": "iPhone 17 Pro Max",
+      "storage": "512GB",
+      "lock": "Unlocked",
+      "condition": "Sealed",
+      "color": "Silver",
+      "price": 1400,
+      "tmobile_premium": 150,
+      "new_used": "NEW"
+    },
+    {
+      "category": "iphone-used",
+      "model": "iPhone 17 Pro Max",
       "storage": "1TB",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1470,
+      "price": 1450,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13444,7 +13444,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 1440,
+      "price": 1460,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13466,7 +13466,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1590,
+      "price": 1620,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13477,7 +13477,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 1610,
+      "price": 1640,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13488,7 +13488,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Silver",
-      "price": 1650,
+      "price": 1700,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13598,7 +13598,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1040,
+      "price": 1080,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13609,17 +13609,6 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 1030,
-      "tmobile_premium": 150,
-      "new_used": "NEW"
-    },
-    {
-      "category": "iphone-used",
-      "model": "iPhone 17 Pro",
-      "storage": "256GB",
-      "lock": "Unlocked",
-      "condition": "Sealed",
-      "color": "Silver",
       "price": 1060,
       "tmobile_premium": 150,
       "new_used": "NEW"
@@ -13627,11 +13616,22 @@
     {
       "category": "iphone-used",
       "model": "iPhone 17 Pro",
+      "storage": "256GB",
+      "lock": "Unlocked",
+      "condition": "Sealed",
+      "color": "Silver",
+      "price": 1100,
+      "tmobile_premium": 150,
+      "new_used": "NEW"
+    },
+    {
+      "category": "iphone-used",
+      "model": "iPhone 17 Pro",
       "storage": "512GB",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1170,
+      "price": 1210,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13642,7 +13642,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 1160,
+      "price": 1200,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13653,7 +13653,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Silver",
-      "price": 1180,
+      "price": 1265,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13664,7 +13664,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Deep Blue",
-      "price": 1290,
+      "price": 1340,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13675,7 +13675,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 1280,
+      "price": 1340,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13686,7 +13686,7 @@
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": "Silver",
-      "price": 1300,
+      "price": 1370,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13752,7 +13752,7 @@
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": "Silver",
-      "price": 880,
+      "price": 900,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
@@ -13774,7 +13774,7 @@
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": "Cosmic Orange",
-      "price": 980,
+      "price": 970,
       "tmobile_premium": 150,
       "new_used": "NEW"
     },
