@@ -501,7 +501,7 @@ def parse_samsung(ws):
             entries.append(PriceEntry(
                 category="samsung",
                 model=current_model,
-                storage=None,
+                storage="default",
                 lock=lock,
                 condition=cond_name,
                 price=price,
