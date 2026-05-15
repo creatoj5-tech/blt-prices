@@ -1,7 +1,7 @@
 {
-  "version": "2026-05-15T08:31:47.025887+00:00Z",
+  "version": "2026-05-15T11:31:16.841758+00:00Z",
   "total": 2586,
-  "lookup_total": 1398,
+  "lookup_total": 1850,
   "lookup": {
     "iPhone 17 Pro Max__256GB__Unlocked__SWAP HSO": 1050,
     "iPhone 17 Pro Max__256GB__Unlocked__Grade A": 1020,
@@ -1400,7 +1400,459 @@
     "iPad Air__64GB__WiFi__Sealed (Activated)": 90,
     "iPad__64GB__WiFi__Sealed": 60,
     "iPad__64GB__WiFi__Open Box": 40,
-    "iPad__64GB__WiFi__Sealed (Activated)": 40
+    "iPad__64GB__WiFi__Sealed (Activated)": 40,
+    "Galaxy Z Fold 7__default__Unlocked__Sealed": 930,
+    "Galaxy Z Fold 7__default__Unlocked__Grade A": 680,
+    "Galaxy Z Fold 7__default__Unlocked__Grade B": 610,
+    "Galaxy Z Fold 7__default__Unlocked__Grade C": 460,
+    "Galaxy Z Fold 7__default__Unlocked__Grade D": 340,
+    "Galaxy Z Fold 7__default__Unlocked__DOA": 100,
+    "Galaxy Z Fold 7__default__Carrier Locked__Sealed": 840,
+    "Galaxy Z Fold 7__default__Carrier Locked__Grade A": 690,
+    "Galaxy Z Fold 7__default__Carrier Locked__Grade B": 620,
+    "Galaxy Z Fold 7__default__Carrier Locked__Grade C": 470,
+    "Galaxy Z Fold 7__default__Carrier Locked__Grade D": 200,
+    "Galaxy Z Fold 7__default__Carrier Locked__DOA": 100,
+    "Galaxy Z Flip 7__default__Unlocked__Sealed": 450,
+    "Galaxy Z Flip 7__default__Unlocked__Grade A": 330,
+    "Galaxy Z Flip 7__default__Unlocked__Grade B": 280,
+    "Galaxy Z Flip 7__default__Unlocked__Grade C": 100,
+    "Galaxy Z Flip 7__default__Unlocked__Grade D": 20,
+    "Galaxy Z Flip 7__default__Unlocked__DOA": 50,
+    "Galaxy Z Flip 7__default__Carrier Locked__Sealed": 350,
+    "Galaxy Z Flip 7__default__Carrier Locked__Grade A": 230,
+    "Galaxy Z Flip 7__default__Carrier Locked__Grade B": 180,
+    "Galaxy Z Flip 7__default__Carrier Locked__Grade C": 50,
+    "Galaxy Z Flip 7__default__Carrier Locked__Grade D": 10,
+    "Galaxy Z Flip 7__default__Carrier Locked__DOA": 50,
+    "Galaxy S26Ultra__default__Unlocked__Sealed": 750,
+    "Galaxy S26Ultra__default__Unlocked__Grade A": 670,
+    "Galaxy S26Ultra__default__Unlocked__Grade B": 640,
+    "Galaxy S26Ultra__default__Unlocked__Grade C": 500,
+    "Galaxy S26Ultra__default__Unlocked__Grade D": 200,
+    "Galaxy S26Ultra__default__Unlocked__DOA": 55,
+    "Galaxy S26Ultra__default__Carrier Locked__Sealed": 650,
+    "Galaxy S26Ultra__default__Carrier Locked__Grade A": 570,
+    "Galaxy S26Ultra__default__Carrier Locked__Grade B": 530,
+    "Galaxy S26Ultra__default__Carrier Locked__Grade C": 420,
+    "Galaxy S26Ultra__default__Carrier Locked__Grade D": 260,
+    "Galaxy S26Ultra__default__Carrier Locked__DOA": 100,
+    "Galaxy S26 Plus__default__Unlocked__Sealed": 500,
+    "Galaxy S26 Plus__default__Unlocked__Grade A": 450,
+    "Galaxy S26 Plus__default__Unlocked__Grade B": 380,
+    "Galaxy S26 Plus__default__Unlocked__Grade C": 260,
+    "Galaxy S26 Plus__default__Unlocked__Grade D": 160,
+    "Galaxy S26 Plus__default__Unlocked__DOA": 30,
+    "Galaxy S26 Plus__default__Carrier Locked__Sealed": 410,
+    "Galaxy S26 Plus__default__Carrier Locked__Grade A": 360,
+    "Galaxy S26 Plus__default__Carrier Locked__Grade B": 330,
+    "Galaxy S26 Plus__default__Carrier Locked__Grade C": 210,
+    "Galaxy S26 Plus__default__Carrier Locked__Grade D": 160,
+    "Galaxy S26 Plus__default__Carrier Locked__DOA": 30,
+    "Galaxy S26__default__Unlocked__Sealed": 420,
+    "Galaxy S26__default__Unlocked__Grade A": 350,
+    "Galaxy S26__default__Unlocked__Grade B": 260,
+    "Galaxy S26__default__Unlocked__Grade C": 220,
+    "Galaxy S26__default__Unlocked__Grade D": 100,
+    "Galaxy S26__default__Unlocked__DOA": 25,
+    "Galaxy S26__default__Carrier Locked__Sealed": 350,
+    "Galaxy S26__default__Carrier Locked__Grade A": 230,
+    "Galaxy S26__default__Carrier Locked__Grade B": 210,
+    "Galaxy S26__default__Carrier Locked__Grade C": 120,
+    "Galaxy S26__default__Carrier Locked__Grade D": 70,
+    "Galaxy S26__default__Carrier Locked__DOA": 25,
+    "Galaxy S25 Ultra__default__Unlocked__Sealed": 580,
+    "Galaxy S25 Ultra__default__Unlocked__Grade A": 480,
+    "Galaxy S25 Ultra__default__Unlocked__Grade B": 460,
+    "Galaxy S25 Ultra__default__Unlocked__Grade C": 270,
+    "Galaxy S25 Ultra__default__Unlocked__Grade D": 250,
+    "Galaxy S25 Ultra__default__Unlocked__DOA": 55,
+    "Galaxy S25 Ultra__default__Carrier Locked__Sealed": 480,
+    "Galaxy S25 Ultra__default__Carrier Locked__Grade A": 380,
+    "Galaxy S25 Ultra__default__Carrier Locked__Grade B": 360,
+    "Galaxy S25 Ultra__default__Carrier Locked__Grade C": 170,
+    "Galaxy S25 Ultra__default__Carrier Locked__Grade D": 150,
+    "Galaxy S25 Ultra__default__Carrier Locked__DOA": 55,
+    "Galaxy S25 EDGE__default__Unlocked__Sealed": 330,
+    "Galaxy S25 EDGE__default__Unlocked__Grade A": 300,
+    "Galaxy S25 EDGE__default__Unlocked__Grade B": 250,
+    "Galaxy S25 EDGE__default__Unlocked__Grade C": 150,
+    "Galaxy S25 EDGE__default__Unlocked__Grade D": 80,
+    "Galaxy S25 EDGE__default__Unlocked__DOA": 35,
+    "Galaxy S25 EDGE__default__Carrier Locked__Sealed": 330,
+    "Galaxy S25 EDGE__default__Carrier Locked__Grade A": 300,
+    "Galaxy S25 EDGE__default__Carrier Locked__Grade B": 250,
+    "Galaxy S25 EDGE__default__Carrier Locked__Grade C": 150,
+    "Galaxy S25 EDGE__default__Carrier Locked__Grade D": 80,
+    "Galaxy S25 EDGE__default__Carrier Locked__DOA": 35,
+    "Galaxy S25 Plus__default__Unlocked__Sealed": 330,
+    "Galaxy S25 Plus__default__Unlocked__Grade C": 300,
+    "Galaxy S25 Plus__default__Unlocked__Grade D": 100,
+    "Galaxy S25 Plus__default__Unlocked__DOA": 30,
+    "Galaxy S25 Plus__default__Carrier Locked__Sealed": 320,
+    "Galaxy S25 Plus__default__Carrier Locked__Grade A": 250,
+    "Galaxy S25 Plus__default__Carrier Locked__Grade B": 200,
+    "Galaxy S25 Plus__default__Carrier Locked__Grade C": 150,
+    "Galaxy S25 Plus__default__Carrier Locked__Grade D": 70,
+    "Galaxy S25 Plus__default__Carrier Locked__DOA": 30,
+    "Galaxy S25__default__Unlocked__Sealed": 240,
+    "Galaxy S25__default__Unlocked__Grade A": 200,
+    "Galaxy S25__default__Unlocked__Grade B": 150,
+    "Galaxy S25__default__Unlocked__Grade C": 120,
+    "Galaxy S25__default__Unlocked__Grade D": 60,
+    "Galaxy S25__default__Unlocked__DOA": 25,
+    "Galaxy S25__default__Carrier Locked__Sealed": 190,
+    "Galaxy S25__default__Carrier Locked__Grade A": 160,
+    "Galaxy S25__default__Carrier Locked__Grade B": 130,
+    "Galaxy S25__default__Carrier Locked__Grade C": 100,
+    "Galaxy S25__default__Carrier Locked__Grade D": 60,
+    "Galaxy S25__default__Carrier Locked__DOA": 25,
+    "Galaxy Z Fold 6__default__Unlocked__Sealed": 600,
+    "Galaxy Z Fold 6__default__Unlocked__Grade C": 280,
+    "Galaxy Z Fold 6__default__Unlocked__Grade D": 200,
+    "Galaxy Z Fold 6__default__Unlocked__DOA": 40,
+    "Galaxy Z Fold 6__default__Carrier Locked__Sealed": 400,
+    "Galaxy Z Fold 6__default__Carrier Locked__Grade A": 380,
+    "Galaxy Z Fold 6__default__Carrier Locked__Grade B": 350,
+    "Galaxy Z Fold 6__default__Carrier Locked__Grade C": 200,
+    "Galaxy Z Fold 6__default__Carrier Locked__Grade D": 100,
+    "Galaxy Z Fold 6__default__Carrier Locked__DOA": 40,
+    "Galaxy Z Flip 6__default__Unlocked__Sealed": 350,
+    "Galaxy Z Flip 6__default__Unlocked__Grade A": 300,
+    "Galaxy Z Flip 6__default__Unlocked__Grade B": 250,
+    "Galaxy Z Flip 6__default__Unlocked__Grade C": 150,
+    "Galaxy Z Flip 6__default__Unlocked__Grade D": 60,
+    "Galaxy Z Flip 6__default__Unlocked__DOA": 15,
+    "Galaxy Z Flip 6__default__Carrier Locked__Grade A": 140,
+    "Galaxy Z Flip 6__default__Carrier Locked__Grade B": 130,
+    "Galaxy Z Flip 6__default__Carrier Locked__Grade C": 60,
+    "Galaxy Z Flip 6__default__Carrier Locked__Grade D": 30,
+    "Galaxy Z Flip 6__default__Carrier Locked__DOA": 15,
+    "Galaxy S24 Ultra__default__Unlocked__DOA": 45,
+    "Galaxy S24 Ultra__default__Carrier Locked__Sealed": 330,
+    "Galaxy S24 Ultra__default__Carrier Locked__Grade A": 285,
+    "Galaxy S24 Ultra__default__Carrier Locked__Grade B": 270,
+    "Galaxy S24 Ultra__default__Carrier Locked__Grade C": 150,
+    "Galaxy S24 Ultra__default__Carrier Locked__Grade D": 65,
+    "Galaxy S24 Ultra__default__Carrier Locked__DOA": 45,
+    "Galaxy S24 Plus__default__Unlocked__Grade A": 285,
+    "Galaxy S24 Plus__default__Unlocked__Grade B": 270,
+    "Galaxy S24 Plus__default__Unlocked__Grade C": 160,
+    "Galaxy S24 Plus__default__Unlocked__Grade D": 85,
+    "Galaxy S24 Plus__default__Unlocked__DOA": 25,
+    "Galaxy S24 Plus__default__Carrier Locked__Grade A": 185,
+    "Galaxy S24 Plus__default__Carrier Locked__Grade B": 170,
+    "Galaxy S24 Plus__default__Carrier Locked__Grade C": 120,
+    "Galaxy S24 Plus__default__Carrier Locked__Grade D": 40,
+    "Galaxy S24 Plus__default__Carrier Locked__DOA": 25,
+    "Galaxy S24__default__Unlocked__Grade A": 215,
+    "Galaxy S24__default__Unlocked__Grade B": 200,
+    "Galaxy S24__default__Unlocked__Grade C": 125,
+    "Galaxy S24__default__Unlocked__Grade D": 65,
+    "Galaxy S24__default__Unlocked__DOA": 20,
+    "Galaxy S24__default__Carrier Locked__Grade A": 115,
+    "Galaxy S24__default__Carrier Locked__Grade B": 105,
+    "Galaxy S24__default__Carrier Locked__Grade C": 50,
+    "Galaxy S24__default__Carrier Locked__Grade D": 30,
+    "Galaxy S24__default__Carrier Locked__DOA": 20,
+    "Galaxy Z Fold 5__default__Unlocked__Grade A": 340,
+    "Galaxy Z Fold 5__default__Unlocked__Grade B": 320,
+    "Galaxy Z Fold 5__default__Unlocked__Grade C": 200,
+    "Galaxy Z Fold 5__default__Unlocked__Grade D": 50,
+    "Galaxy Z Fold 5__default__Unlocked__DOA": 20,
+    "Galaxy Z Fold 5__default__Carrier Locked__Grade A": 225,
+    "Galaxy Z Fold 5__default__Carrier Locked__Grade B": 200,
+    "Galaxy Z Fold 5__default__Carrier Locked__Grade C": 130,
+    "Galaxy Z Fold 5__default__Carrier Locked__Grade D": 30,
+    "Galaxy Z Fold 5__default__Carrier Locked__DOA": 20,
+    "Galaxy Z Flip 5__default__Unlocked__Grade A": 225,
+    "Galaxy Z Flip 5__default__Unlocked__Grade B": 200,
+    "Galaxy Z Flip 5__default__Unlocked__Grade C": 135,
+    "Galaxy Z Flip 5__default__Unlocked__Grade D": 25,
+    "Galaxy Z Flip 5__default__Unlocked__DOA": 10,
+    "Galaxy Z Flip 5__default__Carrier Locked__Grade A": 100,
+    "Galaxy Z Flip 5__default__Carrier Locked__Grade B": 80,
+    "Galaxy Z Flip 5__default__Carrier Locked__Grade C": 50,
+    "Galaxy Z Flip 5__default__Carrier Locked__Grade D": 15,
+    "Galaxy Z Flip 5__default__Carrier Locked__DOA": 10,
+    "Galaxy S23 Ultra__default__Unlocked__Grade A": 325,
+    "Galaxy S23 Ultra__default__Unlocked__Grade B": 300,
+    "Galaxy S23 Ultra__default__Unlocked__Grade C": 200,
+    "Galaxy S23 Ultra__default__Unlocked__Grade D": 105,
+    "Galaxy S23 Ultra__default__Unlocked__DOA": 40,
+    "Galaxy S23 Ultra__default__Carrier Locked__Grade A": 235,
+    "Galaxy S23 Ultra__default__Carrier Locked__Grade B": 220,
+    "Galaxy S23 Ultra__default__Carrier Locked__Grade C": 140,
+    "Galaxy S23 Ultra__default__Carrier Locked__Grade D": 55,
+    "Galaxy S23 Ultra__default__Carrier Locked__DOA": 40,
+    "Galaxy S23 Plus__default__Unlocked__Grade A": 220,
+    "Galaxy S23 Plus__default__Unlocked__Grade B": 200,
+    "Galaxy S23 Plus__default__Unlocked__Grade C": 120,
+    "Galaxy S23 Plus__default__Unlocked__Grade D": 55,
+    "Galaxy S23 Plus__default__Unlocked__DOA": 20,
+    "Galaxy S23 Plus__default__Carrier Locked__Grade A": 140,
+    "Galaxy S23 Plus__default__Carrier Locked__Grade B": 130,
+    "Galaxy S23 Plus__default__Carrier Locked__Grade C": 70,
+    "Galaxy S23 Plus__default__Carrier Locked__Grade D": 30,
+    "Galaxy S23 Plus__default__Carrier Locked__DOA": 20,
+    "Galaxy S23__default__Unlocked__Grade A": 180,
+    "Galaxy S23__default__Unlocked__Grade B": 160,
+    "Galaxy S23__default__Unlocked__Grade C": 90,
+    "Galaxy S23__default__Unlocked__Grade D": 35,
+    "Galaxy S23__default__Unlocked__DOA": 20,
+    "Galaxy S23__default__Carrier Locked__Grade A": 110,
+    "Galaxy S23__default__Carrier Locked__Grade B": 100,
+    "Galaxy S23__default__Carrier Locked__Grade C": 60,
+    "Galaxy S23__default__Carrier Locked__Grade D": 35,
+    "Galaxy S23__default__Carrier Locked__DOA": 20,
+    "Galaxy Z Fold 4__default__Unlocked__Grade A": 250,
+    "Galaxy Z Fold 4__default__Unlocked__Grade B": 230,
+    "Galaxy Z Fold 4__default__Unlocked__Grade C": 150,
+    "Galaxy Z Fold 4__default__Unlocked__Grade D": 40,
+    "Galaxy Z Fold 4__default__Unlocked__DOA": 30,
+    "Galaxy Z Fold 4__default__Carrier Locked__Grade A": 185,
+    "Galaxy Z Fold 4__default__Carrier Locked__Grade B": 170,
+    "Galaxy Z Fold 4__default__Carrier Locked__Grade C": 110,
+    "Galaxy Z Fold 4__default__Carrier Locked__Grade D": 40,
+    "Galaxy Z Fold 4__default__Carrier Locked__DOA": 30,
+    "Galaxy Z Flip 4__default__Unlocked__Grade A": 140,
+    "Galaxy Z Flip 4__default__Unlocked__Grade B": 110,
+    "Galaxy Z Flip 4__default__Unlocked__Grade C": 80,
+    "Galaxy Z Flip 4__default__Unlocked__Grade D": 15,
+    "Galaxy Z Flip 4__default__Unlocked__DOA": 10,
+    "Galaxy Z Flip 4__default__Carrier Locked__Grade A": 70,
+    "Galaxy Z Flip 4__default__Carrier Locked__Grade B": 60,
+    "Galaxy Z Flip 4__default__Carrier Locked__Grade C": 25,
+    "Galaxy Z Flip 4__default__Carrier Locked__Grade D": 15,
+    "Galaxy Z Flip 4__default__Carrier Locked__DOA": 10,
+    "S22 Ultra__default__Unlocked__Grade A": 180,
+    "S22 Ultra__default__Unlocked__Grade B": 150,
+    "S22 Ultra__default__Unlocked__Grade C": 130,
+    "S22 Ultra__default__Unlocked__Grade D": 40,
+    "S22 Ultra__default__Unlocked__DOA": 20,
+    "S22 Ultra__default__Carrier Locked__Grade A": 145,
+    "S22 Ultra__default__Carrier Locked__Grade B": 130,
+    "S22 Ultra__default__Carrier Locked__Grade C": 80,
+    "S22 Ultra__default__Carrier Locked__Grade D": 30,
+    "S22 Ultra__default__Carrier Locked__DOA": 20,
+    "S22+__default__Unlocked__Grade A": 165,
+    "S22+__default__Unlocked__Grade B": 150,
+    "S22+__default__Unlocked__Grade C": 30,
+    "S22+__default__Unlocked__Grade D": 25,
+    "S22+__default__Unlocked__DOA": 10,
+    "S22+__default__Carrier Locked__Grade A": 75,
+    "S22+__default__Carrier Locked__Grade B": 65,
+    "S22+__default__Carrier Locked__Grade C": 20,
+    "S22+__default__Carrier Locked__Grade D": 20,
+    "S22+__default__Carrier Locked__DOA": 10,
+    "S22__default__Unlocked__Grade A": 140,
+    "S22__default__Unlocked__Grade B": 125,
+    "S22__default__Unlocked__Grade C": 30,
+    "S22__default__Unlocked__Grade D": 15,
+    "S22__default__Unlocked__DOA": 10,
+    "S22__default__Carrier Locked__Grade A": 70,
+    "S22__default__Carrier Locked__Grade B": 60,
+    "S22__default__Carrier Locked__Grade C": 30,
+    "S22__default__Carrier Locked__Grade D": 15,
+    "S22__default__Carrier Locked__DOA": 10,
+    "S21 Ultra__default__Unlocked__Grade A": 165,
+    "S21 Ultra__default__Unlocked__Grade B": 150,
+    "S21 Ultra__default__Unlocked__Grade C": 60,
+    "S21 Ultra__default__Unlocked__Grade D": 30,
+    "S21 Ultra__default__Unlocked__DOA": 20,
+    "S21 Ultra__default__Carrier Locked__Grade A": 100,
+    "S21 Ultra__default__Carrier Locked__Grade B": 90,
+    "S21 Ultra__default__Carrier Locked__Grade C": 60,
+    "S21 Ultra__default__Carrier Locked__Grade D": 30,
+    "S21 Ultra__default__Carrier Locked__DOA": 20,
+    "S21+__default__Unlocked__Grade A": 125,
+    "S21+__default__Unlocked__Grade B": 115,
+    "S21+__default__Unlocked__Grade C": 20,
+    "S21+__default__Unlocked__Grade D": 15,
+    "S21+__default__Unlocked__DOA": 10,
+    "S21+__default__Carrier Locked__Grade A": 65,
+    "S21+__default__Carrier Locked__Grade B": 60,
+    "S21+__default__Carrier Locked__Grade C": 15,
+    "S21+__default__Carrier Locked__Grade D": 15,
+    "S21+__default__Carrier Locked__DOA": 10,
+    "S21__default__Unlocked__Grade A": 110,
+    "S21__default__Unlocked__Grade B": 100,
+    "S21__default__Unlocked__Grade C": 20,
+    "S21__default__Unlocked__Grade D": 15,
+    "S21__default__Unlocked__DOA": 10,
+    "S21__default__Carrier Locked__Grade A": 50,
+    "S21__default__Carrier Locked__Grade B": 40,
+    "S21__default__Carrier Locked__Grade C": 15,
+    "S21__default__Carrier Locked__Grade D": 15,
+    "S21__default__Carrier Locked__DOA": 10,
+    "Note 20 Ultra__default__Unlocked__Grade A": 200,
+    "Note 20 Ultra__default__Unlocked__Grade B": 185,
+    "Note 20 Ultra__default__Unlocked__Grade C": 65,
+    "Note 20 Ultra__default__Unlocked__Grade D": 30,
+    "Note 20 Ultra__default__Unlocked__DOA": 30,
+    "Note 20 Ultra__default__Carrier Locked__Grade A": 100,
+    "Note 20 Ultra__default__Carrier Locked__Grade B": 95,
+    "Note 20 Ultra__default__Carrier Locked__Grade C": 50,
+    "Note 20 Ultra__default__Carrier Locked__Grade D": 30,
+    "Note 20 Ultra__default__Carrier Locked__DOA": 30,
+    "Note 20__default__Unlocked__Grade A": 150,
+    "Note 20__default__Unlocked__Grade B": 140,
+    "Note 20__default__Unlocked__Grade C": 40,
+    "Note 20__default__Unlocked__Grade D": 30,
+    "Note 20__default__Unlocked__DOA": 20,
+    "Note 20__default__Carrier Locked__Grade A": 80,
+    "Note 20__default__Carrier Locked__Grade B": 75,
+    "Note 20__default__Carrier Locked__Grade C": 40,
+    "Note 20__default__Carrier Locked__Grade D": 30,
+    "Note 20__default__Carrier Locked__DOA": 20,
+    "S20 Ultra__default__Unlocked__Grade A": 150,
+    "S20 Ultra__default__Unlocked__Grade B": 140,
+    "S20 Ultra__default__Unlocked__Grade C": 50,
+    "S20 Ultra__default__Unlocked__Grade D": 40,
+    "S20 Ultra__default__Unlocked__DOA": 30,
+    "S20 Ultra__default__Carrier Locked__Grade A": 90,
+    "S20 Ultra__default__Carrier Locked__Grade B": 80,
+    "S20 Ultra__default__Carrier Locked__Grade C": 50,
+    "S20 Ultra__default__Carrier Locked__Grade D": 40,
+    "S20 Ultra__default__Carrier Locked__DOA": 30,
+    "S20+__default__Unlocked__Grade A": 130,
+    "S20+__default__Unlocked__Grade B": 120,
+    "S20+__default__Unlocked__Grade C": 40,
+    "S20+__default__Unlocked__Grade D": 20,
+    "S20+__default__Unlocked__DOA": 10,
+    "S20+__default__Carrier Locked__Grade A": 85,
+    "S20+__default__Carrier Locked__Grade B": 85,
+    "S20+__default__Carrier Locked__Grade C": 40,
+    "S20+__default__Carrier Locked__Grade D": 20,
+    "S20+__default__Carrier Locked__DOA": 10,
+    "S20__default__Unlocked__Grade A": 105,
+    "S20__default__Unlocked__Grade B": 95,
+    "S20__default__Unlocked__Grade C": 15,
+    "S20__default__Unlocked__Grade D": 10,
+    "S20__default__Unlocked__DOA": 7,
+    "S20__default__Carrier Locked__Grade A": 50,
+    "S20__default__Carrier Locked__Grade B": 50,
+    "S20__default__Carrier Locked__Grade C": 15,
+    "S20__default__Carrier Locked__Grade D": 10,
+    "S20__default__Carrier Locked__DOA": 7,
+    "Z Flip 3__default__Unlocked__Grade A": 100,
+    "Z Flip 3__default__Unlocked__Grade B": 90,
+    "Z Flip 3__default__Unlocked__Grade C": 10,
+    "Z Flip 3__default__Unlocked__Grade D": 5,
+    "Z Flip 3__default__Unlocked__DOA": 2,
+    "Z Flip 3__default__Carrier Locked__Grade A": 50,
+    "Z Flip 3__default__Carrier Locked__Grade B": 50,
+    "Z Flip 3__default__Carrier Locked__Grade C": 10,
+    "Z Flip 3__default__Carrier Locked__Grade D": 5,
+    "Z Flip 3__default__Carrier Locked__DOA": 2,
+    "Galaxy Fold 3__default__Unlocked__Grade A": 250,
+    "Galaxy Fold 3__default__Unlocked__Grade B": 235,
+    "Galaxy Fold 3__default__Unlocked__Grade C": 40,
+    "Galaxy Fold 3__default__Unlocked__Grade D": 25,
+    "Galaxy Fold 3__default__Unlocked__DOA": 20,
+    "Galaxy Fold 3__default__Carrier Locked__Grade A": 150,
+    "Galaxy Fold 3__default__Carrier Locked__Grade B": 135,
+    "Galaxy Fold 3__default__Carrier Locked__Grade C": 40,
+    "Galaxy Fold 3__default__Carrier Locked__Grade D": 25,
+    "Galaxy Fold 3__default__Carrier Locked__DOA": 20,
+    "Note 10 Plus__default__Unlocked__Grade A": 115,
+    "Note 10 Plus__default__Unlocked__Grade B": 100,
+    "Note 10 Plus__default__Unlocked__Grade C": 10,
+    "Note 10 Plus__default__Unlocked__Grade D": 10,
+    "Note 10 Plus__default__Unlocked__DOA": 5,
+    "Note 10 Plus__default__Carrier Locked__Grade A": 70,
+    "Note 10 Plus__default__Carrier Locked__Grade B": 70,
+    "Note 10 Plus__default__Carrier Locked__Grade C": 10,
+    "Note 10 Plus__default__Carrier Locked__Grade D": 10,
+    "Note 10 Plus__default__Carrier Locked__DOA": 5,
+    "Note 10__default__Unlocked__Grade A": 105,
+    "Note 10__default__Unlocked__Grade B": 100,
+    "Note 10__default__Unlocked__Grade C": 15,
+    "Note 10__default__Unlocked__Grade D": 10,
+    "Note 10__default__Unlocked__DOA": 5,
+    "Note 10__default__Carrier Locked__Grade A": 65,
+    "Note 10__default__Carrier Locked__Grade B": 65,
+    "Note 10__default__Carrier Locked__Grade C": 15,
+    "Note 10__default__Carrier Locked__Grade D": 10,
+    "Note 10__default__Carrier Locked__DOA": 5,
+    "Note 9__default__Unlocked__Grade A": 85,
+    "Note 9__default__Unlocked__Grade B": 80,
+    "Note 9__default__Unlocked__Grade C": 15,
+    "Note 9__default__Unlocked__Grade D": 10,
+    "Note 9__default__Unlocked__DOA": 5,
+    "Note 9__default__Carrier Locked__Grade A": 60,
+    "Note 9__default__Carrier Locked__Grade B": 55,
+    "Note 9__default__Carrier Locked__Grade C": 15,
+    "Note 9__default__Carrier Locked__Grade D": 10,
+    "Note 9__default__Carrier Locked__DOA": 5,
+    "Note 8__default__Unlocked__Grade A": 70,
+    "Note 8__default__Unlocked__Grade B": 65,
+    "Note 8__default__Unlocked__Grade C": 12,
+    "Note 8__default__Unlocked__Grade D": 10,
+    "Note 8__default__Unlocked__DOA": 5,
+    "Note 8__default__Carrier Locked__Grade A": 35,
+    "Note 8__default__Carrier Locked__Grade B": 35,
+    "Note 8__default__Carrier Locked__Grade C": 12,
+    "Note 8__default__Carrier Locked__Grade D": 10,
+    "Note 8__default__Carrier Locked__DOA": 5,
+    "S10 Plus__default__Unlocked__Grade A": 85,
+    "S10 Plus__default__Unlocked__Grade B": 80,
+    "S10 Plus__default__Unlocked__Grade C": 10,
+    "S10 Plus__default__Unlocked__Grade D": 8,
+    "S10 Plus__default__Unlocked__DOA": 5,
+    "S10 Plus__default__Carrier Locked__Grade A": 55,
+    "S10 Plus__default__Carrier Locked__Grade B": 55,
+    "S10 Plus__default__Carrier Locked__Grade C": 10,
+    "S10 Plus__default__Carrier Locked__Grade D": 8,
+    "S10 Plus__default__Carrier Locked__DOA": 5,
+    "S10__default__Unlocked__Grade A": 65,
+    "S10__default__Unlocked__Grade B": 60,
+    "S10__default__Unlocked__Grade C": 10,
+    "S10__default__Unlocked__Grade D": 5,
+    "S10__default__Unlocked__DOA": 3,
+    "S10__default__Carrier Locked__Grade A": 30,
+    "S10__default__Carrier Locked__Grade B": 30,
+    "S10__default__Carrier Locked__Grade C": 10,
+    "S10__default__Carrier Locked__Grade D": 5,
+    "S10__default__Carrier Locked__DOA": 3,
+    "S10E__default__Unlocked__Grade A": 50,
+    "S10E__default__Unlocked__Grade B": 45,
+    "S10E__default__Unlocked__Grade C": 5,
+    "S10E__default__Unlocked__Grade D": 3,
+    "S10E__default__Unlocked__DOA": 2,
+    "S10E__default__Carrier Locked__Grade A": 20,
+    "S10E__default__Carrier Locked__Grade B": 20,
+    "S10E__default__Carrier Locked__Grade C": 5,
+    "S10E__default__Carrier Locked__Grade D": 3,
+    "S10E__default__Carrier Locked__DOA": 2,
+    "S9 Plus__default__Unlocked__Grade A": 60,
+    "S9 Plus__default__Unlocked__Grade B": 55,
+    "S9 Plus__default__Unlocked__Grade C": 5,
+    "S9 Plus__default__Unlocked__Grade D": 3,
+    "S9 Plus__default__Unlocked__DOA": 2,
+    "S9 Plus__default__Carrier Locked__Grade A": 30,
+    "S9 Plus__default__Carrier Locked__Grade B": 30,
+    "S9 Plus__default__Carrier Locked__Grade C": 5,
+    "S9 Plus__default__Carrier Locked__Grade D": 3,
+    "S9 Plus__default__Carrier Locked__DOA": 2,
+    "S9__default__Unlocked__Grade A": 45,
+    "S9__default__Unlocked__Grade B": 40,
+    "S9__default__Unlocked__Grade C": 3,
+    "S9__default__Unlocked__Grade D": 2,
+    "S9__default__Unlocked__DOA": 1,
+    "S9__default__Carrier Locked__Grade A": 20,
+    "S9__default__Carrier Locked__Grade B": 20,
+    "S9__default__Carrier Locked__Grade C": 3,
+    "S9__default__Carrier Locked__Grade D": 2,
+    "S9__default__Carrier Locked__DOA": 1,
+    "S8 Plus__default__Unlocked__Grade A": 45,
+    "S8 Plus__default__Unlocked__Grade B": 40,
+    "S8 Plus__default__Carrier Locked__Grade A": 20,
+    "S8 Plus__default__Carrier Locked__Grade B": 20,
+    "S8__default__Unlocked__Grade A": 40,
+    "S8__default__Unlocked__Grade B": 35,
+    "S8__default__Carrier Locked__Grade A": 10,
+    "S8__default__Carrier Locked__Grade B": 10
   },
   "entries": [
     {
@@ -24308,7 +24760,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -24319,7 +24771,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -24330,7 +24782,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -24341,7 +24793,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -24352,7 +24804,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -24363,7 +24815,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -24374,7 +24826,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -24385,7 +24837,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -24396,7 +24848,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -24407,7 +24859,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -24418,7 +24870,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -24429,7 +24881,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -24440,7 +24892,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -24451,7 +24903,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -24462,7 +24914,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -24473,7 +24925,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -24484,7 +24936,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -24495,7 +24947,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -24506,7 +24958,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -24517,7 +24969,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -24528,7 +24980,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -24539,7 +24991,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -24550,7 +25002,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -24561,7 +25013,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 7",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -24572,7 +25024,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -24583,7 +25035,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -24594,7 +25046,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -24605,7 +25057,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -24616,7 +25068,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -24627,7 +25079,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -24638,7 +25090,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -24649,7 +25101,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -24660,7 +25112,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -24671,7 +25123,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -24682,7 +25134,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -24693,7 +25145,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -24704,7 +25156,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -24715,7 +25167,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -24726,7 +25178,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -24737,7 +25189,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -24748,7 +25200,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -24759,7 +25211,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -24770,7 +25222,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -24781,7 +25233,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -24792,7 +25244,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -24803,7 +25255,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -24814,7 +25266,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -24825,7 +25277,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -24836,7 +25288,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -24847,7 +25299,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -24858,7 +25310,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -24869,7 +25321,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -24880,7 +25332,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -24891,7 +25343,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -24902,7 +25354,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -24913,7 +25365,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -24924,7 +25376,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -24935,7 +25387,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -24946,7 +25398,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -24957,7 +25409,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S26",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -24968,7 +25420,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -24979,7 +25431,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -24990,7 +25442,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -25001,7 +25453,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25012,7 +25464,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25023,7 +25475,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25034,7 +25486,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -25045,7 +25497,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25056,7 +25508,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25067,7 +25519,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25078,7 +25530,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25089,7 +25541,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25100,7 +25552,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -25111,7 +25563,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -25122,7 +25574,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -25133,7 +25585,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25144,7 +25596,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25155,7 +25607,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25166,7 +25618,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -25177,7 +25629,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25188,7 +25640,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25199,7 +25651,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25210,7 +25662,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25221,7 +25673,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 EDGE",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25232,7 +25684,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -25243,7 +25695,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25254,7 +25706,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25265,7 +25717,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25276,7 +25728,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -25287,7 +25739,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25298,7 +25750,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25309,7 +25761,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25320,7 +25772,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25331,7 +25783,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25342,7 +25794,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -25353,7 +25805,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -25364,7 +25816,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -25375,7 +25827,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25386,7 +25838,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25397,7 +25849,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25408,7 +25860,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -25419,7 +25871,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25430,7 +25882,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25441,7 +25893,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25452,7 +25904,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25463,7 +25915,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S25",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25474,7 +25926,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -25485,7 +25937,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25496,7 +25948,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25507,7 +25959,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25518,7 +25970,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -25529,7 +25981,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25540,7 +25992,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25551,7 +26003,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25562,7 +26014,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25573,7 +26025,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25584,7 +26036,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Sealed",
       "color": null,
@@ -25595,7 +26047,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -25606,7 +26058,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -25617,7 +26069,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25628,7 +26080,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25639,7 +26091,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25650,7 +26102,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25661,7 +26113,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25672,7 +26124,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25683,7 +26135,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25694,7 +26146,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 6",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25705,7 +26157,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25716,7 +26168,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Sealed",
       "color": null,
@@ -25727,7 +26179,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25738,7 +26190,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25749,7 +26201,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25760,7 +26212,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25771,7 +26223,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25782,7 +26234,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -25793,7 +26245,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -25804,7 +26256,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25815,7 +26267,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25826,7 +26278,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25837,7 +26289,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25848,7 +26300,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25859,7 +26311,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25870,7 +26322,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25881,7 +26333,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -25892,7 +26344,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -25903,7 +26355,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -25914,7 +26366,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -25925,7 +26377,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -25936,7 +26388,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -25947,7 +26399,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -25958,7 +26410,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -25969,7 +26421,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -25980,7 +26432,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -25991,7 +26443,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S24",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26002,7 +26454,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26013,7 +26465,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26024,7 +26476,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26035,7 +26487,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26046,7 +26498,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26057,7 +26509,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26068,7 +26520,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26079,7 +26531,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26090,7 +26542,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26101,7 +26553,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26112,7 +26564,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26123,7 +26575,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26134,7 +26586,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26145,7 +26597,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26156,7 +26608,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26167,7 +26619,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26178,7 +26630,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26189,7 +26641,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26200,7 +26652,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26211,7 +26663,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 5",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26222,7 +26674,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26233,7 +26685,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26244,7 +26696,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26255,7 +26707,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26266,7 +26718,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26277,7 +26729,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26288,7 +26740,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26299,7 +26751,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26310,7 +26762,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26321,7 +26773,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26332,7 +26784,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26343,7 +26795,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26354,7 +26806,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26365,7 +26817,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26376,7 +26828,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26387,7 +26839,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26398,7 +26850,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26409,7 +26861,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26420,7 +26872,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26431,7 +26883,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26442,7 +26894,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26453,7 +26905,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26464,7 +26916,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26475,7 +26927,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26486,7 +26938,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26497,7 +26949,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26508,7 +26960,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26519,7 +26971,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26530,7 +26982,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26541,7 +26993,7 @@
     {
       "category": "samsung",
       "model": "Galaxy S23",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26552,7 +27004,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26563,7 +27015,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26574,7 +27026,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26585,7 +27037,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26596,7 +27048,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26607,7 +27059,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26618,7 +27070,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26629,7 +27081,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26640,7 +27092,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26651,7 +27103,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Fold 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26662,7 +27114,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26673,7 +27125,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26684,7 +27136,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26695,7 +27147,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26706,7 +27158,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26717,7 +27169,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26728,7 +27180,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26739,7 +27191,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26750,7 +27202,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26761,7 +27213,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Z Flip 4",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26772,7 +27224,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26783,7 +27235,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26794,7 +27246,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26805,7 +27257,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26816,7 +27268,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26827,7 +27279,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26838,7 +27290,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26849,7 +27301,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26860,7 +27312,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26871,7 +27323,7 @@
     {
       "category": "samsung",
       "model": "S22 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26882,7 +27334,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -26893,7 +27345,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -26904,7 +27356,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -26915,7 +27367,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -26926,7 +27378,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -26937,7 +27389,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -26948,7 +27400,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -26959,7 +27411,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -26970,7 +27422,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -26981,7 +27433,7 @@
     {
       "category": "samsung",
       "model": "S22+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -26992,7 +27444,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27003,7 +27455,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27014,7 +27466,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27025,7 +27477,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27036,7 +27488,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27047,7 +27499,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27058,7 +27510,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27069,7 +27521,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27080,7 +27532,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27091,7 +27543,7 @@
     {
       "category": "samsung",
       "model": "S22",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27102,7 +27554,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27113,7 +27565,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27124,7 +27576,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27135,7 +27587,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27146,7 +27598,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27157,7 +27609,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27168,7 +27620,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27179,7 +27631,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27190,7 +27642,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27201,7 +27653,7 @@
     {
       "category": "samsung",
       "model": "S21 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27212,7 +27664,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27223,7 +27675,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27234,7 +27686,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27245,7 +27697,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27256,7 +27708,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27267,7 +27719,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27278,7 +27730,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27289,7 +27741,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27300,7 +27752,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27311,7 +27763,7 @@
     {
       "category": "samsung",
       "model": "S21+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27322,7 +27774,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27333,7 +27785,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27344,7 +27796,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27355,7 +27807,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27366,7 +27818,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27377,7 +27829,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27388,7 +27840,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27399,7 +27851,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27410,7 +27862,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27421,7 +27873,7 @@
     {
       "category": "samsung",
       "model": "S21",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27432,7 +27884,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27443,7 +27895,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27454,7 +27906,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27465,7 +27917,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27476,7 +27928,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27487,7 +27939,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27498,7 +27950,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27509,7 +27961,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27520,7 +27972,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27531,7 +27983,7 @@
     {
       "category": "samsung",
       "model": "Note 20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27542,7 +27994,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27553,7 +28005,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27564,7 +28016,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27575,7 +28027,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27586,7 +28038,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27597,7 +28049,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27608,7 +28060,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27619,7 +28071,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27630,7 +28082,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27641,7 +28093,7 @@
     {
       "category": "samsung",
       "model": "Note 20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27652,7 +28104,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27663,7 +28115,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27674,7 +28126,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27685,7 +28137,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27696,7 +28148,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27707,7 +28159,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27718,7 +28170,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27729,7 +28181,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27740,7 +28192,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27751,7 +28203,7 @@
     {
       "category": "samsung",
       "model": "S20 Ultra",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27762,7 +28214,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27773,7 +28225,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27784,7 +28236,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27795,7 +28247,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27806,7 +28258,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27817,7 +28269,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27828,7 +28280,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27839,7 +28291,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27850,7 +28302,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27861,7 +28313,7 @@
     {
       "category": "samsung",
       "model": "S20+",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27872,7 +28324,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27883,7 +28335,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -27894,7 +28346,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -27905,7 +28357,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -27916,7 +28368,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -27927,7 +28379,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -27938,7 +28390,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -27949,7 +28401,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -27960,7 +28412,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -27971,7 +28423,7 @@
     {
       "category": "samsung",
       "model": "S20",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -27982,7 +28434,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -27993,7 +28445,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28004,7 +28456,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28015,7 +28467,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28026,7 +28478,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28037,7 +28489,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28048,7 +28500,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28059,7 +28511,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28070,7 +28522,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28081,7 +28533,7 @@
     {
       "category": "samsung",
       "model": "Z Flip 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28092,7 +28544,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28103,7 +28555,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28114,7 +28566,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28125,7 +28577,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28136,7 +28588,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28147,7 +28599,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28158,7 +28610,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28169,7 +28621,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28180,7 +28632,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28191,7 +28643,7 @@
     {
       "category": "samsung",
       "model": "Galaxy Fold 3",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28202,7 +28654,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28213,7 +28665,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28224,7 +28676,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28235,7 +28687,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28246,7 +28698,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28257,7 +28709,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28268,7 +28720,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28279,7 +28731,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28290,7 +28742,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28301,7 +28753,7 @@
     {
       "category": "samsung",
       "model": "Note 10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28312,7 +28764,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28323,7 +28775,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28334,7 +28786,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28345,7 +28797,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28356,7 +28808,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28367,7 +28819,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28378,7 +28830,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28389,7 +28841,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28400,7 +28852,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28411,7 +28863,7 @@
     {
       "category": "samsung",
       "model": "Note 10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28422,7 +28874,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28433,7 +28885,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28444,7 +28896,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28455,7 +28907,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28466,7 +28918,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28477,7 +28929,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28488,7 +28940,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28499,7 +28951,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28510,7 +28962,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28521,7 +28973,7 @@
     {
       "category": "samsung",
       "model": "Note 9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28532,7 +28984,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28543,7 +28995,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28554,7 +29006,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28565,7 +29017,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28576,7 +29028,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28587,7 +29039,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28598,7 +29050,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28609,7 +29061,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28620,7 +29072,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28631,7 +29083,7 @@
     {
       "category": "samsung",
       "model": "Note 8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28642,7 +29094,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28653,7 +29105,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28664,7 +29116,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28675,7 +29127,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28686,7 +29138,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28697,7 +29149,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28708,7 +29160,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28719,7 +29171,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28730,7 +29182,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28741,7 +29193,7 @@
     {
       "category": "samsung",
       "model": "S10 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28752,7 +29204,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28763,7 +29215,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28774,7 +29226,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28785,7 +29237,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28796,7 +29248,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28807,7 +29259,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28818,7 +29270,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28829,7 +29281,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28840,7 +29292,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28851,7 +29303,7 @@
     {
       "category": "samsung",
       "model": "S10",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28862,7 +29314,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28873,7 +29325,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28884,7 +29336,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -28895,7 +29347,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -28906,7 +29358,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -28917,7 +29369,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -28928,7 +29380,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -28939,7 +29391,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -28950,7 +29402,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -28961,7 +29413,7 @@
     {
       "category": "samsung",
       "model": "S10E",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -28972,7 +29424,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -28983,7 +29435,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -28994,7 +29446,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -29005,7 +29457,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -29016,7 +29468,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -29027,7 +29479,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -29038,7 +29490,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -29049,7 +29501,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -29060,7 +29512,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -29071,7 +29523,7 @@
     {
       "category": "samsung",
       "model": "S9 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -29082,7 +29534,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -29093,7 +29545,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -29104,7 +29556,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
@@ -29115,7 +29567,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade D",
       "color": null,
@@ -29126,7 +29578,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "DOA",
       "color": null,
@@ -29137,7 +29589,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -29148,7 +29600,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -29159,7 +29611,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade C",
       "color": null,
@@ -29170,7 +29622,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade D",
       "color": null,
@@ -29181,7 +29633,7 @@
     {
       "category": "samsung",
       "model": "S9",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "DOA",
       "color": null,
@@ -29192,7 +29644,7 @@
     {
       "category": "samsung",
       "model": "S8 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -29203,7 +29655,7 @@
     {
       "category": "samsung",
       "model": "S8 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -29214,7 +29666,7 @@
     {
       "category": "samsung",
       "model": "S8 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -29225,7 +29677,7 @@
     {
       "category": "samsung",
       "model": "S8 Plus",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
@@ -29236,7 +29688,7 @@
     {
       "category": "samsung",
       "model": "S8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade A",
       "color": null,
@@ -29247,7 +29699,7 @@
     {
       "category": "samsung",
       "model": "S8",
-      "storage": "",
+      "storage": "default",
       "lock": "Unlocked",
       "condition": "Grade B",
       "color": null,
@@ -29258,7 +29710,7 @@
     {
       "category": "samsung",
       "model": "S8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade A",
       "color": null,
@@ -29269,7 +29721,7 @@
     {
       "category": "samsung",
       "model": "S8",
-      "storage": "",
+      "storage": "default",
       "lock": "Carrier Locked",
       "condition": "Grade B",
       "color": null,
