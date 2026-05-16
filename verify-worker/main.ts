@@ -1,25 +1,44 @@
 /**
  * BLT Trading — reply verification worker (Deno Deploy).
  *
- * Receives the Claude reply + the live lookup block via POST JSON,
- * validates every $N in the reply against "→ $N" in the lookup,
- * returns either the original reply or a safe fallback if any
- * dollar amount isn't a real KEY-row price.
+ * Fetches the live lookup.txt itself (with 60-second in-memory cache),
+ * then validates every $N in the Claude reply against "→ $N" rows.
+ * Returns either the original reply or a safe fallback if any
+ * quoted dollar amount isn't a real KEY-row price.
  *
  * Wire from Make.com Module 13:
- *   URL:  https://<project>.deno.dev/
+ *   URL:  https://blt-verify.creatoj5-tech.deno.net/
  *   Method: POST
- *   Headers: Content-Type: application/json
- *   Body:
- *     {
- *       "reply": "{{3.textResponse}}",
- *       "lookup": "{{2.data}}"
- *     }
+ *   Body content type: application/json
+ *   Body input method: JSON string
+ *   Body content: {"reply":"{{15.textResponse}}"}
+ *   Parse response: Yes
  *   Map final_reply to the response body's `final_reply` field.
  */
 
+const LOOKUP_URL =
+  "https://raw.githubusercontent.com/creatoj5-tech/blt-prices/main/lookup.txt";
 const FALLBACK =
   "Not on our current buying list — text Yu (909) 664-5589.";
+const CACHE_TTL_MS = 60_000;
+
+let cachedLookup: { text: string; fetchedAt: number } | null = null;
+
+async function getLookup(): Promise<string> {
+  const now = Date.now();
+  if (cachedLookup && now - cachedLookup.fetchedAt < CACHE_TTL_MS) {
+    return cachedLookup.text;
+  }
+  const r = await fetch(LOOKUP_URL, { cache: "no-store" });
+  if (!r.ok) {
+    // Stale cache is better than nothing; if no cache, throw.
+    if (cachedLookup) return cachedLookup.text;
+    throw new Error(`lookup fetch failed: ${r.status}`);
+  }
+  const text = await r.text();
+  cachedLookup = { text, fetchedAt: now };
+  return text;
+}
 
 function ok(payload: Record<string, unknown>): Response {
   return new Response(JSON.stringify(payload), {
@@ -31,11 +50,11 @@ function ok(payload: Record<string, unknown>): Response {
 Deno.serve(async (request: Request): Promise<Response> => {
   if (request.method !== "POST") {
     return ok({
-      final_reply: "BLT verify worker: POST a JSON body with reply + lookup.",
+      final_reply: "BLT verify worker: POST a JSON body with a reply field.",
     });
   }
 
-  let body: { reply?: unknown; lookup?: unknown };
+  let body: { reply?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -43,13 +62,12 @@ Deno.serve(async (request: Request): Promise<Response> => {
   }
 
   const reply = typeof body.reply === "string" ? body.reply : "";
-  const lookup = typeof body.lookup === "string" ? body.lookup : "";
 
   if (!reply) {
     return ok({ final_reply: FALLBACK });
   }
 
-  // Pull every $<digits> the reply quotes.
+  // Pull every "$<digits>" the reply quotes.
   const dollarMatches = reply.match(/\$\d+/g) ?? [];
 
   // Templates with no price (ADDR / HRS / L / C / E) — pass through.
@@ -57,9 +75,12 @@ Deno.serve(async (request: Request): Promise<Response> => {
     return ok({ final_reply: reply });
   }
 
-  // Empty lookup → fail safe.
-  if (!lookup) {
-    return ok({ final_reply: FALLBACK });
+  // Fetch the live lookup (with caching). If this fails, fail safe.
+  let lookup: string;
+  try {
+    lookup = await getLookup();
+  } catch {
+    return ok({ final_reply: FALLBACK, rejected: true, reason: "lookup_fetch_failed" });
   }
 
   // Every quoted $N must appear in the lookup as the substring "→ $N".
