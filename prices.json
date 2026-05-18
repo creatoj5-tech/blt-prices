@@ -1,12 +1,12 @@
 {
-  "version": "2026-05-17T20:10:09.848253+00:00Z",
+  "version": "2026-05-18T00:13:20.422091+00:00Z",
   "total": 2586,
   "lookup_total": 1850,
   "lookup": {
     "iPhone 17 Pro Max__256GB__Unlocked__SWAP HSO": 1050,
     "iPhone 17 Pro Max__256GB__Unlocked__Grade A": 1020,
     "iPhone 17 Pro Max__256GB__Unlocked__Grade B": 950,
-    "iPhone 17 Pro Max__256GB__Unlocked__Grade C": 930,
+    "iPhone 17 Pro Max__256GB__Unlocked__Grade C": 830,
     "iPhone 17 Pro Max__256GB__Unlocked__Grade D": 810,
     "iPhone 17 Pro Max__256GB__Unlocked__DOA": 500,
     "iPhone 17 Pro Max__512GB__Unlocked__SWAP HSO": 1180,
@@ -1895,7 +1895,7 @@
       "lock": "Unlocked",
       "condition": "Grade C",
       "color": null,
-      "price": 930,
+      "price": 830,
       "tmobile_premium": null,
       "new_used": "USED"
     },
